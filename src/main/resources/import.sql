@@ -1,0 +1,10 @@
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Carlos Mendes', 'carlos.mendes@mail.com', 'abc123', 'PT1234567', '1991-07-24');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernanda Lopes', 'fernanda.lopes@mail.com', 'senha456', 'PT7654321', '1987-01-05');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ricardo Pinto', 'ricardo.pinto@mail.com', 'meupass1', 'PT1122334', '1995-11-30');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ana Martins', 'ana.martins@mail.com', 'pass789', 'PT4455667', '1990-09-18');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Luís Rocha', 'luis.rocha@mail.com', 'lu1234', 'PT9988776', '1983-12-12');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Patrícia Gomes', 'patricia.gomes@mail.com', 'pgpass', 'PT5566778', '1996-02-22');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Bruno Almeida', 'bruno.almeida@mail.com', 'bru456', 'PT3344556', '1989-06-10');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Sofia Costa', 'sofia.costa@mail.com', 'scpass123', 'PT7788990', '1992-08-27');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Tiago Nunes', 'tiago.nunes@mail.com', 'tn789', 'PT6677885', '1988-04-14');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Raquel Ferreira', 'raquel.ferreira@mail.com', 'rf321', 'PT2233445', '1993-10-03');

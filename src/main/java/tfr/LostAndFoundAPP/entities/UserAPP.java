@@ -1,13 +1,11 @@
 package tfr.LostAndFoundAPP.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tb_user_app")
@@ -18,18 +16,34 @@ public class UserAPP {
     private Long id;
     private String name;
     private String email;
+    private String porNumber;
     private LocalDate birthDate;
     private String password;
+
+    @ElementCollection
+    @CollectionTable(name = "phone_number")
+    private Set<String> phoneNumber = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.userAPP")
+    private Set<OrderItem> items = new HashSet<OrderItem>();
+
+
 
     public UserAPP(){
 
     }
 
-    public UserAPP(Long id, String name, String email, LocalDate birDate, String password) {
+    public UserAPP(Long id, String name, String email, LocalDate birthDate, String porNumber, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.birDate = birDate;
+        this.birthDate = birthDate;
+        this.porNumber = porNumber;
         this.password = password;
     }
 
@@ -57,13 +71,6 @@ public class UserAPP {
         this.email = email;
     }
 
-    public LocalDate getBirDate() {
-        return birDate;
-    }
-
-    public void setBirDate(LocalDate birDate) {
-        this.birDate = birDate;
-    }
 
     public String getPassword() {
         return password;
@@ -71,6 +78,22 @@ public class UserAPP {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getPorNumber() {
+        return porNumber;
+    }
+
+    public void setPorNumber(String porNumber) {
+        this.porNumber = porNumber;
     }
 
     @Override
