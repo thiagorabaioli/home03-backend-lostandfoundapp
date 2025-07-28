@@ -1,10 +1,159 @@
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Carlos Mendes', 'carlos.mendes@mail.com', 'abc123', 'PT1234567', '1991-07-24');
+INSERT INTO phone_number (userapp_id, phone_number) VALUES (1, '912345678'), (1, '934567890');
+
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernanda Lopes', 'fernanda.lopes@mail.com', 'senha456', 'PT7654321', '1987-01-05');
+INSERT INTO phone_number (userapp_id, phone_number) VALUES (2, '912345679');
+
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ricardo Pinto', 'ricardo.pinto@mail.com', 'meupass1', 'PT1122334', '1995-11-30');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ana Martins', 'ana.martins@mail.com', 'pass789', 'PT4455667', '1990-09-18');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Luís Rocha', 'luis.rocha@mail.com', 'lu1234', 'PT9988776', '1983-12-12');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Patrícia Gomes', 'patricia.gomes@mail.com', 'pgpass', 'PT5566778', '1996-02-22');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Bruno Almeida', 'bruno.almeida@mail.com', 'bru456', 'PT3344556', '1989-06-10');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Sofia Costa', 'sofia.costa@mail.com', 'scpass123', 'PT7788990', '1992-08-27');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Tiago Nunes', 'tiago.nunes@mail.com', 'tn789', 'PT6677885', '1988-04-14');
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Raquel Ferreira', 'raquel.ferreira@mail.com', 'rf321', 'PT2233445', '1993-10-03');
+INSERT INTO phone_number (userapp_id, phone_number) VALUES (3, '912345680');
+
+
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('João Moreira', 'antoniocampos@live.com', 'ujLJ8aU6', 'PT1719274', '1983-06-22');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Carlos Ramos', 'claudiocosta@hotmail.com', 'X9qvjWhT', 'PT3242077', '1993-01-24');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fátima Costa', 'leonorfreitas@yahoo.com', 'oKybqX2F', 'PT9199186', '1983-11-06');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Pedro Pinto', 'gabrielasilva@hotmail.com', 'Q3hUtS7W', 'PT1936907', '1990-03-15');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Beatriz Teixeira', 'claudiaalmeida@gmail.com', '6NYMre9A', 'PT3950204', '1971-11-19');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('David Cardoso', 'tiagopereira@gmail.com', 'cqGt8RUc', 'PT7284487', '1974-09-06');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Helena Correia', 'manuelpereira@yahoo.com', 'kg4MF0tx', 'PT4701256', '1992-05-24');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Tiago Fernandes', 'paulonascimento@yahoo.com', 'WqEtPv85', 'PT3109785', '1970-09-13');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('André Sousa', 'teresamatos@gmail.com', 'uhSnMB9q', 'PT5381343', '1981-08-18');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Patrícia Lopes', 'barbaraferreira@live.com', 'iqwnOSZ0', 'PT7481042', '1970-08-28');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Francisco Gomes', 'ritamartins@yahoo.com', 'KiGSuM1j', 'PT9360391', '1981-09-16');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ricardo Matos', 'bernardocosta@hotmail.com', 'v2Wj6pX5', 'PT5188813', '1993-05-10');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ana Reis', 'isabelalmeida@hotmail.com', 'EYvABXYN', 'PT1845515', '1995-05-06');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Joana Barbosa', 'vanessatavares@hotmail.com', 'NSR7lxyH', 'PT8458043', '1995-11-19');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Marta Rocha', 'inescastro@hotmail.com', '5DWpPBHE', 'PT8690268', '1993-12-14');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Vítor Neves', 'danielaraujo@yahoo.com', 'A84OU3M9', 'PT7031068', '1983-09-14');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Leonor Araújo', 'francisconogueira@gmail.com', 'HTkhPZyz', 'PT1512712', '1990-06-10');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Rita Monteiro', 'carlosribeiro@gmail.com', '5VG7EsbW', 'PT2988583', '1981-11-06');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Miguel Batista', 'sofiaribeiro@yahoo.com', 'u7s0HdZT', 'PT2027096', '1980-09-25');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Cláudia Sousa', 'marianunes@yahoo.com', 'lVpFk4OU', 'PT2400744', '1971-08-23');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Diogo Martins', 'anagoncalves@yahoo.com', '6dAjhEZ1', 'PT4964861', '1990-02-21');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Teresa Silva', 'catarinamartins@outlook.com', 'gCvuPbKr', 'PT7825735', '1972-01-15');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Rafael Lima', 'josecabral@yahoo.com', 's9n2hRoC', 'PT3019484', '1989-02-13');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Susana Almeida', 'luismachado@hotmail.com', 'IAdUuH9v', 'PT8553258', '1993-04-28');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernando Marques', 'cristinapereira@hotmail.com', '9BnkW1ra', 'PT9020257', '1982-12-01');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Cátia Freitas', 'anafernandes@gmail.com', 'Ke1Ezngg', 'PT4164651', '1986-12-01');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Paulo Cruz', 'jorgecarvalho@gmail.com', 'gMYNj8Il', 'PT3595196', '1976-01-02');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Luciana Dias', 'carlapinto@outlook.com', 'z8MYAx29', 'PT2505367', '1971-01-25');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Helio Silva', 'heliosilva@outlook.com', 'ZKrqpHeX', 'PT9432229', '1983-03-10');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Abel Alexandre', 'abelalexandre@gmail.com', '5NzZxFKH', 'PT7194147', '1979-04-06');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Joaquim Pereira', 'joaquim@hotmail.com', 'eZLChBQ5', 'PT6929567', '1972-11-10');
+
+INSERT INTO tb_role (authority) VALUES ('ROLE_VISITANTE');
+INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
+INSERT INTO tb_role (authority) VALUES ('ROLE_VIGILANTE');
+INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
+
+
+-- 15 VISITANTES (role_id = 1)
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (5, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (6, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (7, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (8, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (9, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (10, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (11, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (12, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (13, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (14, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (15, 1);
+
+-- 7 OPERADORES (role_id = 2)
+INSERT INTO tb_user_role (user_id, role_id) VALUES (16, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (17, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (18, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (19, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (20, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (21, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (22, 2);
+
+-- 5 VIGILANTES (role_id = 3)
+INSERT INTO tb_user_role (user_id, role_id) VALUES (23, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (24, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (25, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (26, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (27, 3);
+
+-- 3 ADMINISTRADORES (role_id = 4)
+INSERT INTO tb_user_role (user_id, role_id) VALUES (28, 4);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (28, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (29, 4);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (29, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (30, 4);
+
+
+
+
+
+
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Auditório', 'Visitante Mateus Moreira', 'Carteira preta com cartões', '2025-04-08', 'https://example.com/img/carteira.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Piso 1 Sala de espera', 'Visitante Rodrigo Pinto', 'Auriculares brancos', '2025-02-20', 'https://example.com/img/auriculares.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Recepção', 'Visitante Mariana Fernandes', 'Relógio de pulso prateado', '2025-01-13', 'https://example.com/img/relogio.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Cantina', 'Visitante Beatriz Lopes', 'Carteira castanha com documentos', '2025-06-13', 'https://example.com/img/carteira2.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Elevador bloco B', 'Visitante Leonor Castro', 'Chaves com porta-chaves azul', '2025-01-25', 'https://example.com/img/chaves.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Entrada principal', 'Visitante Guilherme Rocha', 'Casaco preto com capuz', '2025-05-11', 'https://example.com/img/casaco.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Piso 2 WC Masculino', 'Visitante Lara Gomes', 'Óculos de sol Ray-Ban', '2025-06-04', 'https://example.com/img/oculos.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Biblioteca', 'Visitante Ricardo Figueiredo', 'Telemóvel Samsung azul', '2025-03-05', 'https://example.com/img/telemovel.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Estacionamento', 'Visitante Catarina Ribeiro', 'Carteira preta com cartões', '2025-04-24', 'https://example.com/img/carteira.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Corredor central', 'Visitante Tomás Almeida', 'Garrafa de água metálica', '2025-01-08', 'https://example.com/img/garrafa.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Entrada principal', 'Visitante Inês Carvalho', 'Chaves com porta-chaves azul', '2025-03-18', 'https://example.com/img/chaves.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Cantina', 'Visitante João Matos', 'Mochila vermelha com livros', '2025-02-02', 'https://example.com/img/mochila.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Auditório', 'Visitante Rafael Sousa', 'Relógio de pulso prateado', '2025-07-11', 'https://example.com/img/relogio.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Elevador bloco B', 'Visitante Sara Marques', 'Carteira castanha com documentos', '2025-06-07', 'https://example.com/img/carteira2.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Corredor central', 'Visitante Filipe Barros', 'Telemóvel Samsung azul', '2025-05-15', 'https://example.com/img/telemovel.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Piso 1 Sala de espera', 'Visitante Sofia Neves', 'Óculos de sol Ray-Ban', '2025-03-28', 'https://example.com/img/oculos.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Recepção', 'Visitante Diogo Ferreira', 'Auriculares brancos', '2025-01-30', 'https://example.com/img/auriculares.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Biblioteca', 'Visitante Mariana Costa', 'Carteira preta com cartões', '2025-02-17', 'https://example.com/img/carteira.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Piso 2 WC Masculino', 'Visitante Bruno Martins', 'Garrafa de água metálica', '2025-03-09', 'https://example.com/img/garrafa.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Entrada principal', 'Visitante Carla Lima', 'Casaco preto com capuz', '2025-04-20', 'https://example.com/img/casaco.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Estacionamento', 'Visitante Hugo Teixeira', 'Mochila vermelha com livros', '2025-06-26', 'https://example.com/img/mochila.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Cantina', 'Visitante Joana Vieira', 'Carteira castanha com documentos', '2025-05-03', 'https://example.com/img/carteira2.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Biblioteca', 'Visitante Miguel Batista', 'Chaves com porta-chaves azul', '2025-06-18', 'https://example.com/img/chaves.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Elevador bloco B', 'Visitante Teresa Barata', 'Relógio de pulso prateado', '2025-07-07', 'https://example.com/img/relogio.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Auditório', 'Visitante Daniel Morais', 'Carteira preta com cartões', '2025-04-27', 'https://example.com/img/carteira.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Corredor central', 'Visitante Liliana Fonseca', 'Telemóvel Samsung azul', '2025-05-30', 'https://example.com/img/telemovel.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Recepção', 'Visitante Ricardo Dias', 'Óculos de sol Ray-Ban', '2025-02-22', 'https://example.com/img/oculos.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Piso 1 Sala de espera', 'Visitante Vera Nogueira', 'Auriculares brancos', '2025-01-10', 'https://example.com/img/auriculares.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Cantina', 'Visitante Nuno Pires', 'Carteira castanha com documentos', '2025-06-10', 'https://example.com/img/carteira2.jpg');
+INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Estacionamento', 'Visitante Andreia Leal', 'Chaves com porta-chaves azul', '2025-03-16', 'https://example.com/img/chaves.jpg');
+
+
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 1, 11);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 2, 6);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 3, 8);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 4, 4);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 5, 28);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 6, 13);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (4, 7, 7);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 8, 17);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 9, 10);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 10, 5);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (4, 11, 9);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 12, 27);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (4, 13, 25);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 14, 2);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (2, 15, 1);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 16, 3);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 17, 20);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 18, 24);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 19, 15);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (4, 20, 14);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 21, 23);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 22, 26);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 23, 12);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 24, 21);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 25, 22);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 26, 29);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (2, 27, 16);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 28, 30);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (3, 29, 18);
+INSERT INTO ORDER_ITEM (type, item_lost_id, userapp_id) VALUES (1, 30, 19);
+
+
+
+
