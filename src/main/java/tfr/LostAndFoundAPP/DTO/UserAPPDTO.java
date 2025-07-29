@@ -1,9 +1,13 @@
 package tfr.LostAndFoundAPP.DTO;
 
 import jakarta.persistence.*;
-import tfr.LostAndFoundAPP.entities.OrderItem;
-import tfr.LostAndFoundAPP.entities.Role;
+import jakarta.validation.constraints.Email;
+import org.hibernate.validator.constraints.UniqueElements;
 import tfr.LostAndFoundAPP.entities.UserAPP;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -12,8 +16,16 @@ import java.util.Set;
 public class UserAPPDTO {
 
     private Long id;
+
+    @Size(min = 3, max = 80, message = "Nome precisar ter de 3 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String name;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @Positive(message = "O POR deve ter 10 caracteres")
     private String porNumber;
     private LocalDate birthDate;
     private String password;

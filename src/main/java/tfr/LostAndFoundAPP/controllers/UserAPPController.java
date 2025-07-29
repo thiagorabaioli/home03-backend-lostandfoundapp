@@ -1,6 +1,7 @@
 package tfr.LostAndFoundAPP.controllers;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +45,7 @@ public class UserAPPController {
     }
 
     @PostMapping
-    public ResponseEntity<UserAPPDTO> insert (@RequestBody UserAPPDTO dto) {
+    public ResponseEntity<UserAPPDTO> insert (@Valid @RequestBody UserAPPDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(dto.getId()).toUri();
@@ -52,7 +53,7 @@ public class UserAPPController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<UserAPPDTO> update(@RequestBody UserAPPDTO dto, @PathVariable  Long id) {
+    public ResponseEntity<UserAPPDTO> update(@Valid @RequestBody UserAPPDTO dto, @PathVariable  Long id) {
           dto = service.update(dto, id);
           return ResponseEntity.ok().body(dto);
     }
