@@ -21,6 +21,9 @@ public class ItemLost {
     private LocalDate foundDate;
     private String imgUrl;
 
+    @OneToOne(mappedBy = "itemLost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Delivery delivery;
+
     @OneToMany(mappedBy = "itemLost")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 

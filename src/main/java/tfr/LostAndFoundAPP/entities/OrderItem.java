@@ -23,7 +23,7 @@ public class OrderItem {
 
 
     @ManyToOne
-    @JoinColumn(name = "")
+    @JoinColumn(name = "item_lost_id")
     private ItemLost itemLost;
 
     public OrderItem(){
