@@ -2,9 +2,10 @@ package tfr.LostAndFoundAPP.entities.enums;
 
 public enum TYPEOFINTERACTION {
 
-    INSERT(1, "iNSERT"),
-    DELIVERY(2, "WITHOUT Value"),
-    WAITING(3, "Other");
+    INSERT(1, "INSERT"),
+    DELIVERY(2, "DELIVERY"),
+    WAITING(2, "WAITING"),
+    OTHER(3, "Other");
 
     private int cod;
     private String description;
