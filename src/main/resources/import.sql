@@ -122,36 +122,38 @@ INSERT INTO tb_item_lost (status, location, who_find, description, found_date, i
 INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Cantina', 'Visitante Nuno Pires', 'Carteira castanha com documentos', '2025-06-10', 'https://example.com/img/carteira2.jpg');
 INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Estacionamento', 'Visitante Andreia Leal', 'Chaves com porta-chaves azul', '2025-03-16', 'https://example.com/img/chaves.jpg');
 
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-01', 1, 11, 'Nota do pedido 1');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-02', 2, 6, 'Nota do pedido 2');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-03', 3, 8, 'Nota do pedido 3');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-04', 4, 4, 'Nota do pedido 4');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-05', 5, 28, 'Nota do pedido 5');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-06', 6, 13, 'Nota do pedido 6');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-07', 7, 7, 'Nota do pedido 7');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-08', 8, 17, 'Nota do pedido 8');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-09', 9, 10, 'Nota do pedido 9');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-10', 10, 5, 'Nota do pedido 10');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-11', 11, 9, 'Nota do pedido 11');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-12', 12, 27, 'Nota do pedido 12');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-13', 13, 25, 'Nota do pedido 13');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-14', 14, 2, 'Nota do pedido 14');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-15', 15, 1, 'Nota do pedido 15');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-16', 16, 3, 'Nota do pedido 16');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-17', 17, 20, 'Nota do pedido 17');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-18', 18, 24, 'Nota do pedido 18');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-19', 19, 15, 'Nota do pedido 19');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-20', 20, 14, 'Nota do pedido 20');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-21', 21, 23, 'Nota do pedido 21');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-22', 22, 26, 'Nota do pedido 22');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-23', 23, 12, 'Nota do pedido 23');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-24', 24, 21, 'Nota do pedido 24');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-25', 25, 22, 'Nota do pedido 25');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-26', 26, 29, 'Nota do pedido 26');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-27', 27, 16, 'Nota do pedido 27');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-28', 28, 30, 'Nota do pedido 28');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-29', 29, 18, 'Nota do pedido 29');
-INSERT INTO ORDER_ITEM (type, interaction_date, itemlost_id, userapp_id, notes) VALUES (1, '2025-07-30', 30, 19, 'Nota do pedido 30');
+
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 1, 11, 'Nota do pedido 1');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-02', 2, 6, 'Nota do pedido 2');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-03', 3, 8, 'Nota do pedido 3');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-04', 4, 4, 'Nota do pedido 4');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-05', 5, 28, 'Nota do pedido 5');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-06', 6, 13, 'Nota do pedido 6');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-07', 7, 7, 'Nota do pedido 7');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-08', 8, 17, 'Nota do pedido 8');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-09', 9, 10, 'Nota do pedido 9');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-10', 10, 5, 'Nota do pedido 10');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-11', 11, 9, 'Nota do pedido 11');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-12', 12, 27, 'Nota do pedido 12');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-13', 13, 25, 'Nota do pedido 13');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-14', 14, 2, 'Nota do pedido 14');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-15', 15, 1, 'Nota do pedido 15');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-16', 16, 3, 'Nota do pedido 16');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-17', 17, 20, 'Nota do pedido 17');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-18', 18, 24, 'Nota do pedido 18');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-19', 19, 15, 'Nota do pedido 19');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-20', 20, 14, 'Nota do pedido 20');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-21', 21, 23, 'Nota do pedido 21');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-22', 22, 26, 'Nota do pedido 22');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-23', 23, 12, 'Nota do pedido 23');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-24', 24, 21, 'Nota do pedido 24');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-25', 25, 22, 'Nota do pedido 25');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-26', 26, 29, 'Nota do pedido 26');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-27', 27, 16, 'Nota do pedido 27');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-28', 28, 30, 'Nota do pedido 28');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-29', 29, 18, 'Nota do pedido 29');
+INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-30', 30, 19, 'Nota do pedido 30');
+
 
 
 
