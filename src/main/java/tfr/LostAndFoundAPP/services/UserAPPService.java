@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import tfr.LostAndFoundAPP.DTO.UserAPPDTO;
 import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
@@ -36,6 +33,11 @@ public class UserAPPService {
     }
 
     @Transactional
+    public void delete(@PathVariable Long id){
+        repository.deleteById(id);
+    }
+
+    @Transactional
     public UserAPPDTO insert(UserAPPDTO dto){
         UserAPP entity = new UserAPP();
        copyDtoToEntity(dto, entity);
@@ -54,8 +56,10 @@ public class UserAPPService {
 
 
 
+
+
     private void copyDtoToEntity(UserAPPDTO dto, UserAPP entity){
-        entity.setId(dto.getId());
+
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
