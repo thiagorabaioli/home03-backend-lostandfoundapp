@@ -29,7 +29,7 @@ public class UserAPP {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "id.userAPP")
+    @OneToMany(mappedBy = "userAPP")
     private Set<OrderItem> items = new HashSet<OrderItem>();
 
 

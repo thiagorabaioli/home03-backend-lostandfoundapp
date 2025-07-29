@@ -21,7 +21,7 @@ public class ItemLost {
     private LocalDate foundDate;
     private String imgUrl;
 
-    @OneToMany(mappedBy = "id.itemLost")
+    @OneToMany(mappedBy = "itemLost")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     public ItemLost(){

@@ -1,8 +1,7 @@
 package tfr.LostAndFoundAPP.entities;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 
 import java.time.Instant;
@@ -11,31 +10,56 @@ import java.time.Instant;
 @Table(name="order_item")
 public class OrderItem {
 
-    @EmbeddedId
-    private OrderItemPK id = new OrderItemPK();
-
+   @Id
+   @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
     private Integer type;
     private String notes;
     private Instant interactionDate;
+
+    @ManyToOne
+    @JoinColumn(name = "userapp_id")
+    private UserAPP userAPP;
+
+
+    @ManyToOne
+    @JoinColumn(name = "itemlost_id")
+    private ItemLost itemLost;
 
     public OrderItem(){
 
     }
 
-    public OrderItem(UserAPP userapp,ItemLost itemLost, TYPEOFINTERACTION type, String notes, Instant interactionDate) {
-        id.setUserAPP(userapp);
-        id.setItemLost(itemLost);
+    public OrderItem(UserAPP userAPP, ItemLost itemLost, TYPEOFINTERACTION type, String notes, Instant interactionDate) {
+        this.userAPP = userAPP;
+        this.itemLost = itemLost;
         this.type = type.getCod();
         this.notes = notes;
         this.interactionDate = interactionDate;
     }
 
-    public OrderItemPK getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(OrderItemPK id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public ItemLost getItemLost() {
+        return itemLost;
+    }
+
+    public void setItemLost(ItemLost itemLost) {
+        this.itemLost = itemLost;
+    }
+
+    public UserAPP getUserAPP() {
+        return userAPP;
+    }
+
+    public void setUserAPP(UserAPP userAPP) {
+        this.userAPP = userAPP;
     }
 
     public Instant getInteractionDate() {
@@ -58,13 +82,6 @@ public class OrderItem {
         this.type = type;
     }
 
-    public UserAPP getUserAPP() {
-        return id.getUserAPP();
-    }
-
-   public ItemLost getItemLost() {
-        return id.getItemLost();
-   }
 
 
     public TYPEOFINTERACTION getType() {
