@@ -117,11 +117,6 @@ public class UserAPP {
         final UserAPP other = (UserAPP) obj;
         return Objects.equals(this.id, other.id);
     }
-
     
-    
-
-    
-
     
 }

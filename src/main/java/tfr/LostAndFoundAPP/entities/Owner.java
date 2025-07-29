@@ -1,12 +1,14 @@
 package tfr.LostAndFoundAPP.entities;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tb_owner")
+@DiscriminatorValue("OWNER")
 public class Owner extends Delivery {
 
     private String name;

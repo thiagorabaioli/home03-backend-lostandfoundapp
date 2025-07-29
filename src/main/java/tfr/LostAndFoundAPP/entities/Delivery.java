@@ -8,7 +8,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_delivery")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "delivery_type", discriminatorType = DiscriminatorType.STRING) // <-- ADICIONE ESTA LINHA
 public abstract class Delivery {
 
     @Id
