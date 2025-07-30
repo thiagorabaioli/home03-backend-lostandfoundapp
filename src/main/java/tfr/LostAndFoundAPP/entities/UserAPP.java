@@ -15,7 +15,11 @@ public class UserAPP {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
     private String porNumber;
     private LocalDate birthDate;
     private String password;
@@ -94,6 +98,19 @@ public class UserAPP {
 
     public void setPorNumber(String porNumber) {
         this.porNumber = porNumber;
+    }
+
+    public void addRole(Role role){
+        roles.add(role);
+    }
+
+    public boolean hasRole(String roleName){
+        for(Role role : roles){
+            if (role.getAuthority().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

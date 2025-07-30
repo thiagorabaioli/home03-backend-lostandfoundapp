@@ -1,4 +1,4 @@
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Carlos Mendes', 'carlos.mendes@mail.com', 'abc123', 'PT1234567', '1991-07-24');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Maria Silva', 'maria@gmail.com', '12345', 'PT1234567', '1991-07-24');
 INSERT INTO phone_number (userapp_id, phone_number) VALUES (1, '912345678'), (1, '934567890');
 
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernanda Lopes', 'fernanda.lopes@mail.com', 'senha456', 'PT7654321', '1987-01-05');
@@ -73,6 +73,7 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (21, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (22, 2);
 
 -- 5 VIGILANTES (role_id = 3)
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (23, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (24, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (25, 3);
