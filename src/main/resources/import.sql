@@ -1,4 +1,4 @@
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Maria Silva', 'maria@gmail.com', '12345', 'PT1234567', '1991-07-24');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Maria Silva', 'maria@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT1234567', '1991-07-24');
 INSERT INTO phone_number (userapp_id, phone_number) VALUES (1, '912345678'), (1, '934567890');
 
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernanda Lopes', 'fernanda.lopes@mail.com', 'senha456', 'PT7654321', '1987-01-05');
