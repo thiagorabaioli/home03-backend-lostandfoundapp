@@ -25,7 +25,7 @@ public class UserAPPDTO {
     @Email
     private String email;
 
-    @Positive(message = "O POR deve ter 10 caracteres")
+
     private String porNumber;
     private LocalDate birthDate;
     private String password;

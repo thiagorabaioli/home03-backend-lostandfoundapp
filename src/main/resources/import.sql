@@ -1,7 +1,7 @@
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Maria Silva', 'maria@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT1234567', '1991-07-24');
 INSERT INTO phone_number (userapp_id, phone_number) VALUES (1, '912345678'), (1, '934567890');
 
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Fernanda Lopes', 'fernanda.lopes@mail.com', 'senha456', 'PT7654321', '1987-01-05');
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Alex Teixeira', 'alex@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT7654321', '1987-01-05');
 INSERT INTO phone_number (userapp_id, phone_number) VALUES (2, '912345679');
 
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date) VALUES ('Ricardo Pinto', 'ricardo.pinto@mail.com', 'meupass1', 'PT1122334', '1995-11-30');
@@ -47,8 +47,8 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 
 
 -- 15 VISITANTES (role_id = 1)
-INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
+
+
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (5, 1);
@@ -81,11 +81,9 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (26, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (27, 3);
 
 -- 3 ADMINISTRADORES (role_id = 4)
-INSERT INTO tb_user_role (user_id, role_id) VALUES (28, 4);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (28, 3);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (29, 4);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (29, 3);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (30, 4);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 4);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 4);
+
 
 
 

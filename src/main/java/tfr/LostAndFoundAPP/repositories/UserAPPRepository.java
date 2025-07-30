@@ -7,6 +7,7 @@ import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.projections.UserDetailsProjection;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserAPPRepository  extends JpaRepository<UserAPP,Long> {
@@ -19,6 +20,8 @@ public interface UserAPPRepository  extends JpaRepository<UserAPP,Long> {
 		WHERE tb_user_app.email = :email
 	""")
 	List<UserDetailsProjection> searchUserAndRolesByEmail(String email);
+
+  Optional<UserAPP> findByEmail(String email);
 
 }
 
