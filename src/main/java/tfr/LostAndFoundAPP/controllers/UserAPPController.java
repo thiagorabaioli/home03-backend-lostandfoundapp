@@ -22,9 +22,18 @@ public class UserAPPController {
 
     @Autowired
     private UserAPPService service;
+
+
     @Autowired
     private HandlerMapping resourceHandlerMapping;
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @GetMapping(value = "/me")
+    public ResponseEntity<UserAPPDTO> getMe(){
+        UserAPPDTO dto  = service.getMe();
+        return ResponseEntity.ok(dto);
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -60,5 +69,6 @@ public class UserAPPController {
           dto = service.update(dto, id);
           return ResponseEntity.ok().body(dto);
     }
+
 
 }

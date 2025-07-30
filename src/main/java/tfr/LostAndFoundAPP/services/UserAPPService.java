@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 import tfr.LostAndFoundAPP.DTO.UserAPPDTO;
 import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
@@ -78,5 +81,25 @@ public class UserAPPService {
         entity.setPassword(dto.getPassword());
         entity.setPorNumber(dto.getPorNumber());
         entity.setBirthDate(dto.getBirthDate());
+    }
+
+    protected UserAPP authenticate() {
+
+        try{
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+            return repository.findByEmail(username).get();
+
+        }
+        catch(Exception e){
+            throw new UsernameNotFoundException("Invalid username/password");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserAPPDTO getMe(){
+        UserAPP user = authenticate();
+        return new UserAPPDTO(user);
     }
 }

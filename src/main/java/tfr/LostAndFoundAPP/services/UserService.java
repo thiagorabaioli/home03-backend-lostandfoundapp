@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import tfr.LostAndFoundAPP.DTO.UserAPPDTO;
 import tfr.LostAndFoundAPP.entities.Role;
 import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.projections.UserDetailsProjection;
@@ -38,17 +39,5 @@ public class UserService implements UserDetailsService {
         return userapp;
     }
 
-    protected UserAPP authenticate() {
 
-        try{
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-            String username = jwtPrincipal.getClaim("username");
-           return repository.findByEmail(username).get();
-
-        }
-        catch(Exception e){
-            throw new UsernameNotFoundException("Invalid username/password");
-        }
-    }
 }

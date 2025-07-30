@@ -2,15 +2,16 @@ package tfr.LostAndFoundAPP.DTO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.security.core.GrantedAuthority;
 import tfr.LostAndFoundAPP.entities.UserAPP;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UserAPPDTO {
@@ -34,6 +35,8 @@ public class UserAPPDTO {
     @CollectionTable(name = "phone_number")
     private Set<String> phoneNumber = new HashSet<>();
 
+    private List<String> roles = new ArrayList<String>();
+
     public UserAPPDTO(){}
 
     public UserAPPDTO(Long id, String name, String email, String porNumber, LocalDate birthDate, String password, Set<String> phoneNumber) {
@@ -53,6 +56,9 @@ public class UserAPPDTO {
         porNumber = entity.getPorNumber();
         birthDate = entity.getBirthDate();
         password = entity.getPassword();
+        for (GrantedAuthority role : entity.getRoles()){
+            roles.add(role.getAuthority());
+        }
     }
 
     public Long getId() {
@@ -81,5 +87,9 @@ public class UserAPPDTO {
 
     public Set<String> getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public List<String> getRoles() {
+        return roles;
     }
 }

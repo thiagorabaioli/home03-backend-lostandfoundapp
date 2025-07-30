@@ -143,6 +143,10 @@ public class UserAPP implements UserDetails {
         return false;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
