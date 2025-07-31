@@ -83,6 +83,8 @@ public class UserAPPService {
         entity.setBirthDate(dto.getBirthDate());
     }
 
+
+
     protected UserAPP authenticate() {
 
         try{

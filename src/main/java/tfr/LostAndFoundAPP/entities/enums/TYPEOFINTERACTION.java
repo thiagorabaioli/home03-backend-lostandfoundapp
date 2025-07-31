@@ -5,7 +5,7 @@ public enum TYPEOFINTERACTION {
     INSERT(1, "INSERT"),
     DELIVERY(2, "DELIVERY"),
     WAITING(2, "WAITING"),
-    OTHER(3, "Other");
+    OTHER(3, "OTHER");
 
     private int cod;
     private String description;
