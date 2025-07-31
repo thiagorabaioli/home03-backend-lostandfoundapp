@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import tfr.LostAndFoundAPP.DTO.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;

@@ -1,4 +1,4 @@
-package tfr.LostAndFoundAPP.DTO;
+package tfr.LostAndFoundAPP.DTO.entities;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

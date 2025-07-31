@@ -1,4 +1,4 @@
-package tfr.LostAndFoundAPP.DTO;
+package tfr.LostAndFoundAPP.DTO.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

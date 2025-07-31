@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tfr.LostAndFoundAPP.DTO.DeliveryDTO;
+import tfr.LostAndFoundAPP.DTO.entities.DeliveryDTO;
 import tfr.LostAndFoundAPP.entities.Delivery;
 import tfr.LostAndFoundAPP.repositories.DeliveryRepository;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;

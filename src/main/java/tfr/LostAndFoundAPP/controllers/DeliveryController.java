@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tfr.LostAndFoundAPP.DTO.DeliveryDTO;
+import tfr.LostAndFoundAPP.DTO.entities.DeliveryDTO;
 import tfr.LostAndFoundAPP.services.DeliveryService;
 
 @RestController

@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import tfr.LostAndFoundAPP.DTO.UserAPPDTO;
+import tfr.LostAndFoundAPP.DTO.entities.UserAPPDTO;
 import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;

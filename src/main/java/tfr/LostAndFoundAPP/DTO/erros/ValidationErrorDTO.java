@@ -1,4 +1,4 @@
-package tfr.LostAndFoundAPP.DTO;
+package tfr.LostAndFoundAPP.DTO.erros;
 
 import java.time.Instant;
 import java.util.ArrayList;

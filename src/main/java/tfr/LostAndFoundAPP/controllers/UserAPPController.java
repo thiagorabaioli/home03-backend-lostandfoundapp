@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tfr.LostAndFoundAPP.DTO.UserAPPDTO;
+import tfr.LostAndFoundAPP.DTO.entities.UserAPPDTO;
 import tfr.LostAndFoundAPP.services.UserAPPService;
 
 import java.net.URI;

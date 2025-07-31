@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tfr.LostAndFoundAPP.DTO.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
 import tfr.LostAndFoundAPP.services.ItemLostService;
 
 import java.net.URI;

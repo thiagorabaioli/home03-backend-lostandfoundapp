@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import tfr.LostAndFoundAPP.DTO.OwnerDTO;
+import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
 import tfr.LostAndFoundAPP.services.OwnerService;
 
 @Controller
