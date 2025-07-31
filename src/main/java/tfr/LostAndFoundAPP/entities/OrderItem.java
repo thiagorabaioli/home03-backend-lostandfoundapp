@@ -1,6 +1,5 @@
 package tfr.LostAndFoundAPP.entities;
 
-
 import jakarta.persistence.*;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 
@@ -20,6 +19,7 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "userapp_id")
     private UserAPP userAPP;
+
 
 
     @ManyToOne
@@ -61,6 +61,7 @@ public class OrderItem {
     public void setUserAPP(UserAPP userAPP) {
         this.userAPP = userAPP;
     }
+
 
     public Instant getInteractionDate() {
         return interactionDate;

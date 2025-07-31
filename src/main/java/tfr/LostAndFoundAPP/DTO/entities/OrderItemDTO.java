@@ -1,6 +1,7 @@
 package tfr.LostAndFoundAPP.DTO.entities;
 
 
+
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.entities.OrderItem;
 import tfr.LostAndFoundAPP.entities.UserAPP;
@@ -14,6 +15,8 @@ public class OrderItemDTO {
     private String notes;
     private Instant interactionDate;
     private UserAPP userAPP;
+
+
     private ItemLost itemLost;
 
     public OrderItemDTO() {}
@@ -56,6 +59,7 @@ public class OrderItemDTO {
     public UserAPP getUserAPP() {
         return userAPP;
     }
+
 
     public ItemLost getItemLost() {
         return itemLost;

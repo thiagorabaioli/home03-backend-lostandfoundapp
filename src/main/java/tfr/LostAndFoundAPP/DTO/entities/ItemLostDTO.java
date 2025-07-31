@@ -3,8 +3,11 @@ package tfr.LostAndFoundAPP.DTO.entities;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import tfr.LostAndFoundAPP.entities.ItemLost;
+import tfr.LostAndFoundAPP.entities.OrderItem;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ItemLostDTO {
 
@@ -26,6 +29,7 @@ public class ItemLostDTO {
 
     private LocalDate foundDate;
     private String imgUrl;
+
 
     public ItemLostDTO() {}
 
@@ -76,4 +80,6 @@ public class ItemLostDTO {
     public String getImgUrl() {
         return imgUrl;
     }
+
+
 }

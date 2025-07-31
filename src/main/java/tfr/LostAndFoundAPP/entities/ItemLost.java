@@ -98,6 +98,22 @@ public class ItemLost {
         this.imgUrl = imgUrl;
     }
 
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
