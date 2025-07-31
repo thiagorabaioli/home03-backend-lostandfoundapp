@@ -1,5 +1,7 @@
 package tfr.LostAndFoundAPP.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 
 import java.time.LocalDate;
@@ -8,9 +10,20 @@ public class ItemLostDTO {
 
     private Long id;
     private boolean status;
+
+    @Size(min = 8, max = 80, message = "Local precisa ter de 8 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String location;
+
+    @Size(min = 8, max = 80, message = "Quem encontrou precisa ter de 8 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String whoFind;
+
+    @Size(min = 15, max = 80, message = "Descrição precisa ter de 15 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String description;
+
+
     private LocalDate foundDate;
     private String imgUrl;
 

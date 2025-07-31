@@ -2,10 +2,12 @@ package tfr.LostAndFoundAPP.controllers;
 
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tfr.LostAndFoundAPP.DTO.ItemLostDTO;
@@ -26,27 +28,35 @@ public class ItemLostController {
        return ResponseEntity.ok().body(entity);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @GetMapping
     public ResponseEntity<Page<ItemLostDTO>> findAllPage(Pageable  pageable){
         Page<ItemLostDTO> result = service.findAllPage(pageable);
         return  ResponseEntity.ok().body(result);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @PostMapping
-    public ResponseEntity<ItemLostDTO> insert( @RequestBody  ItemLostDTO dto){
+    public ResponseEntity<ItemLostDTO> insert(@Valid @RequestBody  ItemLostDTO dto){
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ItemLostDTO> update(@PathVariable  Long id, @RequestBody ItemLostDTO dto){
+    public ResponseEntity<ItemLostDTO> update(@PathVariable  Long id, @Valid @RequestBody ItemLostDTO dto){
         dto = service.update(dto,id);
         return ResponseEntity.ok().body(dto);
     }
 
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable  Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

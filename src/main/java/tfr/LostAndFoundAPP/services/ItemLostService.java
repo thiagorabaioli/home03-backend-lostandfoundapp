@@ -3,13 +3,16 @@ package tfr.LostAndFoundAPP.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tfr.LostAndFoundAPP.DTO.ItemLostDTO;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
+import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
 
 import java.util.Optional;
@@ -40,6 +43,7 @@ public class ItemLostService {
 
     }
 
+    @Transactional
     public ItemLostDTO update(ItemLostDTO dto, Long id){
         try{
             ItemLost entity = repository.getReferenceById(id);
@@ -53,17 +57,27 @@ public class ItemLostService {
 
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id){
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Not Found");
+        }
+        try {
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Falha de integridade referencial");
+        }
+    }
+
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
 
         entity.setStatus(dto.isStatus());
         entity.setDescription(dto.getDescription());
-        entity.setLocation(entity.getLocation());
+        entity.setLocation(dto.getLocation());
         entity.setFoundDate(dto.getFoundDate());
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
     }
-
-
-
 
 }
