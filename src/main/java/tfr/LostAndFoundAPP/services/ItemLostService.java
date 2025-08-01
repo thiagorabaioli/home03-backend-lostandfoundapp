@@ -80,11 +80,19 @@ public class ItemLostService {
         entity.setFoundDate(dto.getFoundDate());
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
-        for(OrderItemDTO itemDto : dto.getOrderItems()){
-            OrderItem orderItem = new OrderItem();
-          //  orderItem.setId(itemDto.getId());
-            orderItem.setItemLost(entity);
+        // Limpa a lista existente para evitar duplicatas ao atualizar
+        entity.getOrderItems().clear();
 
+        for (OrderItemDTO itemDto : dto.getOrderItems()) {
+            OrderItem orderItem = new OrderItem();
+            // O ID do OrderItem não deve ser definido manualmente,
+            // pois geralmente é gerado automaticamente pelo banco de dados.
+            // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
+            orderItem.setType(itemDto.getType());
+            orderItem.setNotes(itemDto.getNotes());
+            orderItem.setInteractionDate(itemDto.getInteractionDate());
+            orderItem.setItemLost(entity);
+            entity.getOrderItems().add(orderItem);
         }
     }
 

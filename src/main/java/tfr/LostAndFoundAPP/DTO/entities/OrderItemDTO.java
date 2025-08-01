@@ -47,8 +47,8 @@ public class OrderItemDTO {
 
     public Instant getInteractionDate() {
         return interactionDate;
+
+
     }
-
-
 
 }
