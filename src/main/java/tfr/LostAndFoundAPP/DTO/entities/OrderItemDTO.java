@@ -34,7 +34,6 @@ public class OrderItemDTO {
         } else {
             type = null;
         }
-        type = entity.getType().getCod();
         notes = entity.getNotes();
         interactionDate = entity.getInteractionDate();
 

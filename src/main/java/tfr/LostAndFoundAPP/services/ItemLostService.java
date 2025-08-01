@@ -139,46 +139,47 @@ public class ItemLostService {
 
     @Transactional
     public ItemLostDTO deliver(Long id, OwnerDTO ownerDto) {
-        try {
-            ItemLost itemLost = repository.getReferenceById(id);
 
-            if (!itemLost.isStatus()) {
-                throw new DatabaseException("Este item já foi entregue.");
-            }
+        // Usar findById para garantir que a entidade é totalmente carregada
+        ItemLost itemLost = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Item perdido não encontrado com o id " + id));
 
-            // 1. Mudar o status do ItemLost para 'entregue'
-            itemLost.setStatus(false);
-
-            // 2. Criar e associar a entidade Delivery (Owner)
-            Owner delivery = new Owner();
-            delivery.setName(ownerDto.getName());
-            delivery.setEmail(ownerDto.getEmail());
-            delivery.setContact(ownerDto.getContact());
-            delivery.setLocation(ownerDto.getLocation());
-            delivery.setDeliveryDate(LocalDate.now());
-            delivery.setItemLost(itemLost);
-            itemLost.setDelivery(delivery); // Associa a entrega ao item perdido
-
-            // 3. Criar o registo da interação (OrderItem)
-            UserAPP user = userAppService.authenticate();
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItemLost(itemLost);
-            orderItem.setUserAPP(user);
-            orderItem.setType(TYPEOFINTERACTION.DELIVERY);
-            orderItem.setInteractionDate(Instant.now());
-            orderItem.setNotes("Item entregue a " + ownerDto.getName() + " pelo utilizador " + user.getName());
-
-            // Adiciona a nova interação à lista na entidade
-            itemLost.getOrderItems().add(orderItem);
-
-            // 4. Salvar tudo (CascadeType.ALL irá salvar Owner e OrderItem)
-            itemLost = repository.save(itemLost);
-
-            return new ItemLostDTO(itemLost);
+        if (!itemLost.isStatus()) {
+            throw new DatabaseException("Este item já foi entregue.");
         }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Item perdido não encontrado com o id " + id);
-        }
+
+        // 1. Mudar o status do ItemLost para 'entregue'
+        itemLost.setStatus(false);
+
+        // 2. Criar e associar a entidade Delivery (Owner)
+        Owner delivery = new Owner();
+        delivery.setName(ownerDto.getName());
+        delivery.setEmail(ownerDto.getEmail());
+        delivery.setContact(ownerDto.getContact());
+        delivery.setLocation(ownerDto.getLocation());
+        delivery.setDeliveryDate(LocalDate.now());
+        delivery.setItemLost(itemLost);
+        itemLost.setDelivery(delivery); // Associa a entrega ao item perdido
+
+        // 3. Criar o registo da interação (OrderItem)
+        UserAPP user = userAppService.authenticate();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItemLost(itemLost);
+        orderItem.setUserAPP(user);
+        orderItem.setType(TYPEOFINTERACTION.DELIVERY);
+        orderItem.setInteractionDate(Instant.now());
+        orderItem.setNotes("Item entregue a " + ownerDto.getName() + " pelo utilizador " + user.getName());
+
+        // **LINHA ADICIONADA PARA CORRIGIR O ERRO**
+        orderItemRepository.save(orderItem);
+
+        // Adiciona a nova interação à lista na entidade (para a resposta DTO)
+        itemLost.getOrderItems().add(orderItem);
+
+        // 4. Salvar o ItemLost (isto fará cascade para o novo Delivery)
+        itemLost = repository.save(itemLost);
+
+        return new ItemLostDTO(itemLost);
     }
 
     @Transactional
