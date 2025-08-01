@@ -8,6 +8,7 @@ import tfr.LostAndFoundAPP.entities.OrderItem;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ItemLostDTO {
 
@@ -30,6 +31,8 @@ public class ItemLostDTO {
     private LocalDate foundDate;
     private String imgUrl;
 
+    // Adicione o Set de OrderItemDTO
+    private Set<OrderItemDTO> orderItems = new HashSet<>();
 
     public ItemLostDTO() {}
 
@@ -51,6 +54,8 @@ public class ItemLostDTO {
         description = entity.getDescription();
         foundDate = entity.getFoundDate();
         imgUrl = entity.getImgUrl();
+        // Mapeie cada OrderItem da entidade para um OrderItemDTO
+        orderItems = entity.getOrderItems().stream().map(OrderItemDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -79,6 +84,10 @@ public class ItemLostDTO {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public Set<OrderItemDTO> getOrderItems() {
+        return orderItems;
     }
 
 

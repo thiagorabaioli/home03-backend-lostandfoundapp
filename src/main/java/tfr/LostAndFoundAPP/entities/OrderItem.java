@@ -1,5 +1,6 @@
 package tfr.LostAndFoundAPP.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 
@@ -22,6 +23,7 @@ public class OrderItem {
 
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "item_lost_id")
     private ItemLost itemLost;

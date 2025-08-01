@@ -2,9 +2,7 @@ package tfr.LostAndFoundAPP.DTO.entities;
 
 
 
-import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.entities.OrderItem;
-import tfr.LostAndFoundAPP.entities.UserAPP;
 
 import java.time.Instant;
 
@@ -14,20 +12,17 @@ public class OrderItemDTO {
     private Integer type;
     private String notes;
     private Instant interactionDate;
-    private UserAPP userAPP;
 
 
-    private ItemLost itemLost;
 
     public OrderItemDTO() {}
 
-    public OrderItemDTO(Long id, Integer type, String notes, Instant interactionDate, UserAPP userAPP, ItemLost itemLost) {
+    public OrderItemDTO(Long id, Integer type, String notes, Instant interactionDate) {
         this.id = id;
         this.type = type;
         this.notes = notes;
         this.interactionDate = interactionDate;
-        this.userAPP = userAPP;
-        this.itemLost = itemLost;
+
     }
 
     public OrderItemDTO(OrderItem entity) {
@@ -35,8 +30,6 @@ public class OrderItemDTO {
         type = entity.getType().getCod();
         notes = entity.getNotes();
         interactionDate = entity.getInteractionDate();
-        userAPP = entity.getUserAPP();
-        itemLost = entity.getItemLost();
 
     }
 
@@ -56,12 +49,6 @@ public class OrderItemDTO {
         return interactionDate;
     }
 
-    public UserAPP getUserAPP() {
-        return userAPP;
-    }
 
 
-    public ItemLost getItemLost() {
-        return itemLost;
-    }
 }

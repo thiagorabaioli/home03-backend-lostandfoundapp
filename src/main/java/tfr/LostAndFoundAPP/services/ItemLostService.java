@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.OrderItemDTO;
 import tfr.LostAndFoundAPP.entities.ItemLost;
+import tfr.LostAndFoundAPP.entities.OrderItem;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
@@ -78,6 +80,12 @@ public class ItemLostService {
         entity.setFoundDate(dto.getFoundDate());
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
+        for(OrderItemDTO itemDto : dto.getOrderItems()){
+            OrderItem orderItem = new OrderItem();
+          //  orderItem.setId(itemDto.getId());
+            orderItem.setItemLost(entity);
+
+        }
     }
 
 }
