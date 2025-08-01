@@ -13,10 +13,14 @@ import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OrderItemDTO;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.entities.OrderItem;
+import tfr.LostAndFoundAPP.entities.UserAPP;
+import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
+import tfr.LostAndFoundAPP.repositories.OrderItemRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -24,6 +28,12 @@ public class ItemLostService {
 
     @Autowired
     private ItemLostRepository repository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private UserAPPService userAppService;
 
     @Transactional(readOnly = true)
     public ItemLostDTO findById(Long id){
@@ -41,6 +51,16 @@ public class ItemLostService {
         ItemLost entity = new ItemLost();
         copyToDto(dto, entity);
         entity = repository.save(entity);
+        UserAPP user = userAppService.authenticate();
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItemLost(entity);
+        orderItem.setUserAPP(user);
+        orderItem.setType(TYPEOFINTERACTION.INSERT);
+        orderItem.setInteractionDate(Instant.now());
+        orderItem.setNotes("Item created by user " + user.getName());
+        orderItemRepository.save(orderItem);
+
         return new ItemLostDTO(entity);
 
     }
@@ -74,26 +94,26 @@ public class ItemLostService {
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
 
-        entity.setStatus(dto.isStatus());
-        entity.setDescription(dto.getDescription());
-        entity.setLocation(dto.getLocation());
-        entity.setFoundDate(dto.getFoundDate());
-        entity.setWhoFind(dto.getWhoFind());
-        entity.setImgUrl(dto.getImgUrl());
-        // Limpa a lista existente para evitar duplicatas ao atualizar
-        entity.getOrderItems().clear();
+            entity.setStatus(dto.isStatus());
+            entity.setDescription(dto.getDescription());
+            entity.setLocation(dto.getLocation());
+            entity.setFoundDate(dto.getFoundDate());
+            entity.setWhoFind(dto.getWhoFind());
+            entity.setImgUrl(dto.getImgUrl());
+            // Limpa a lista existente para evitar duplicatas ao atualizar
+            entity.getOrderItems().clear();
 
-        for (OrderItemDTO itemDto : dto.getOrderItems()) {
-            OrderItem orderItem = new OrderItem();
-            // O ID do OrderItem não deve ser definido manualmente,
-            // pois geralmente é gerado automaticamente pelo banco de dados.
-            // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
-            orderItem.setType(itemDto.getType());
-            orderItem.setNotes(itemDto.getNotes());
-            orderItem.setInteractionDate(itemDto.getInteractionDate());
-            orderItem.setItemLost(entity);
-            entity.getOrderItems().add(orderItem);
+            for (OrderItemDTO itemDto : dto.getOrderItems()) {
+                OrderItem orderItem = new OrderItem();
+                // O ID do OrderItem não deve ser definido manualmente,
+                // pois geralmente é gerado automaticamente pelo banco de dados.
+                // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
+                orderItem.setType(itemDto.getType());
+                orderItem.setNotes(itemDto.getNotes());
+                orderItem.setInteractionDate(itemDto.getInteractionDate());
+                orderItem.setItemLost(entity);
+                entity.getOrderItems().add(orderItem);
+            }
         }
-    }
 
 }

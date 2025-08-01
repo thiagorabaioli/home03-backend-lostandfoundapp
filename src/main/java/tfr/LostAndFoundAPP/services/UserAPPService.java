@@ -85,7 +85,7 @@ public class UserAPPService {
 
 
 
-    protected UserAPP authenticate() {
+    public UserAPP authenticate() {
 
         try{
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
