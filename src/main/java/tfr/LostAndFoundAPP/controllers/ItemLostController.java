@@ -36,16 +36,6 @@ public class ItemLostController {
         return  ResponseEntity.ok().body(result);
     }
 
-    /*@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
-    @PostMapping
-    public ResponseEntity<ItemLostDTO> insert(@Valid @RequestBody  ItemLostDTO dto){
-        dto = service.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-
-
-    } */
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @PostMapping
     public ResponseEntity<ItemLostDTO> insertItem(@Valid @RequestBody  ItemLostDTO dto){
@@ -65,20 +55,6 @@ public class ItemLostController {
             return ResponseEntity.ok().body(updatedDto);
         }
 
-
-    /*@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ItemLostDTO> update(@PathVariable  Long id, @Valid @RequestBody ItemLostDTO dto){
-        dto = service.update(dto,id);
-        return ResponseEntity.ok().body(dto);
-    } */
-
-   /* @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ItemLostDTO> delivery(@PathVariable  Long id, @Valid @RequestBody ItemLostDTO dto){
-        dto = service.delivery(dto,id);
-        return ResponseEntity.ok().body(dto);
-    } */
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")

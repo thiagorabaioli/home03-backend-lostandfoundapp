@@ -22,14 +22,14 @@ public class OrderItemController {
     private OrderItemService service;
 
 
-    @Transactional(readOnly = true)
+
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<OrderItemDTO> findById(@PathVariable  Long id){
        OrderItemDTO dto = service.findById(id);
        return ResponseEntity.ok(dto);
 
     }
-    @Transactional(readOnly = true)
+
     @GetMapping
     public ResponseEntity<Page<OrderItemDTO>> findAllPage(Pageable pageable){
         Page<OrderItemDTO> entity = service.findAll(pageable);
