@@ -27,6 +27,13 @@ public class OrderItemDTO {
 
     public OrderItemDTO(OrderItem entity) {
         id = entity.getId();
+
+        // Adicionamos uma verificação para evitar o NullPointerException
+        if (entity.getType() != null) {
+            type = entity.getType().getCod();
+        } else {
+            type = null;
+        }
         type = entity.getType().getCod();
         notes = entity.getNotes();
         interactionDate = entity.getInteractionDate();

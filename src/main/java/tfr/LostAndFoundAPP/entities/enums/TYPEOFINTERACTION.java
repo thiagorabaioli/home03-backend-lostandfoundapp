@@ -4,8 +4,8 @@ public enum TYPEOFINTERACTION {
 
     INSERT(1, "INSERT"),
     DELIVERY(2, "DELIVERY"),
-    WAITING(2, "WAITING"),
-    OTHER(3, "OTHER");
+    WAITING(3, "WAITING"),
+    OTHER(4, "OTHER");
 
     private int cod;
     private String description;

@@ -44,6 +44,14 @@ public abstract class Delivery {
         this.id = id;
     }
 
+    public ItemLost getItemLost() {
+        return itemLost;
+    }
+
+    public void setItemLost(ItemLost itemLost) {
+        this.itemLost = itemLost;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

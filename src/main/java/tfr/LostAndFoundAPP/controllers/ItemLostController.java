@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
 import tfr.LostAndFoundAPP.services.ItemLostService;
 
 import java.net.URI;
@@ -35,21 +36,49 @@ public class ItemLostController {
         return  ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    /*@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @PostMapping
     public ResponseEntity<ItemLostDTO> insert(@Valid @RequestBody  ItemLostDTO dto){
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).build();
+
+
+    } */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @PostMapping
+    public ResponseEntity<ItemLostDTO> insertItem(@Valid @RequestBody  ItemLostDTO dto){
+        dto = service.insertItem(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+
+
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+        @PutMapping(value = "/{id}/deliver")
+        public ResponseEntity<ItemLostDTO> deliver(@PathVariable Long id, @Valid @RequestBody OwnerDTO dto) {
+            ItemLostDTO updatedDto = service.deliver(id, dto);
+            return ResponseEntity.ok().body(updatedDto);
+        }
+
+
+    /*@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ItemLostDTO> update(@PathVariable  Long id, @Valid @RequestBody ItemLostDTO dto){
         dto = service.update(dto,id);
         return ResponseEntity.ok().body(dto);
-    }
+    } */
+
+   /* @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ItemLostDTO> delivery(@PathVariable  Long id, @Valid @RequestBody ItemLostDTO dto){
+        dto = service.delivery(dto,id);
+        return ResponseEntity.ok().body(dto);
+    } */
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")

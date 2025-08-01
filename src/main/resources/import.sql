@@ -156,5 +156,3 @@ INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes)
 
 
 -- Insere uma entrega completa para o dono do item 1, TUDO NUMA ÚNICA LINHA
-INSERT INTO tb_delivery (delivery_type, id, delivery_date, item_lost_id, name, email, contact, location) VALUES ('OWNER', 1, '2025-08-01', 1, 'Carlos Mendes', 'carlos.mendes@mail.com', '912345678', 'Casa');
-
