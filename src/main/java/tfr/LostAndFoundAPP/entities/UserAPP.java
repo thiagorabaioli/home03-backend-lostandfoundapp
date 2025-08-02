@@ -1,5 +1,6 @@
 package tfr.LostAndFoundAPP.entities;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,6 +24,12 @@ public class UserAPP implements UserDetails {
     private String porNumber;
     private LocalDate birthDate;
     private String password;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+    private Instant creatAt;
+
+     @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+    private Instant updateSet;
 
     @ElementCollection
     @CollectionTable(name = "phone_number")
@@ -146,6 +153,29 @@ public class UserAPP implements UserDetails {
     public Set<Role> getRoles() {
         return roles;
     }
+
+    
+
+    public Instant getCreatAt() {
+        return creatAt;
+    }
+
+    @PrePersist
+     public void prePersist(){
+        this.creatAt = Instant.now();
+     }
+
+     @PreUpdate
+     public void preUpdate(){
+        this.updateSet = Instant.now();
+     }
+
+
+    public Instant getUpdateSet() {
+        return updateSet;
+    }
+
+   
 
     @Override
     public int hashCode() {
