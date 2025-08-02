@@ -25,10 +25,10 @@ public class UserAPP implements UserDetails {
     private LocalDate birthDate;
     private String password;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+    @Column(columnDefinition = "TIMESTAMP")
     private Instant creatAt;
 
-     @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+     @Column(columnDefinition = "TIMESTAMP")
     private Instant updateSet;
 
     @ElementCollection
