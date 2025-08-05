@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.ItemLostMinDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OrderItemDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
 import tfr.LostAndFoundAPP.entities.ItemLost;
@@ -24,6 +25,7 @@ import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -218,6 +220,12 @@ public class ItemLostService {
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemLostMinDTO> findPublicItems() {
+        List<ItemLost> result = repository.findByStatusTrue();
+        return result.stream().map(x -> new ItemLostMinDTO(x)).toList();
     }
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){

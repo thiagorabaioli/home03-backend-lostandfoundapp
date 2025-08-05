@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ItemLostRepository extends JpaRepository<ItemLost,Long> {
 
+    List<ItemLost> findByStatusTrue();
 
 }
 

@@ -11,10 +11,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
+import tfr.LostAndFoundAPP.DTO.entities.ItemLostMinDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
 import tfr.LostAndFoundAPP.services.ItemLostService;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/itemlosts")
@@ -62,6 +64,12 @@ public class ItemLostController {
     public ResponseEntity<Void> delete(@PathVariable  Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/public")
+    public ResponseEntity<List<ItemLostMinDTO>> findPublicItems() {
+        List<ItemLostMinDTO> dto = service.findPublicItems();
+        return ResponseEntity.ok(dto);
     }
 
 }
