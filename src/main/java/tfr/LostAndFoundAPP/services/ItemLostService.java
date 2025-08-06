@@ -62,6 +62,8 @@ public class ItemLostService {
         // O `copyDtoToEntity` agora só faz isto, ignora o `orderItems`.
         copyDtoToEntity(dto, entity);
 
+        // CORREÇÃO AQUI: Força o status para TRUE em todos os novos itens
+        entity.setStatus(true);
         // 3. Guarda o novo ItemLost na base de dados
         entity = repository.save(entity);
 

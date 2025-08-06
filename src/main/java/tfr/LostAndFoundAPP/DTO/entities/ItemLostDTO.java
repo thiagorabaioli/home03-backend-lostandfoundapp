@@ -1,9 +1,9 @@
 package tfr.LostAndFoundAPP.DTO.entities;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import tfr.LostAndFoundAPP.entities.ItemLost;
-import tfr.LostAndFoundAPP.entities.OrderItem;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class ItemLostDTO {
     private String description;
 
 
+    @NotNull(message = "O campo data em que foi encontrado não pode ser nulo.")
     private LocalDate foundDate;
     private String imgUrl;
 
