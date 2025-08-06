@@ -57,6 +57,14 @@ public class ItemLostController {
             return ResponseEntity.ok().body(updatedDto);
         }
 
+        // MÉTODO DE ATUALIZAÇÃO ADICIONADO AQUI
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+        @PutMapping(value = "/{id}")
+        public ResponseEntity<ItemLostDTO> update(@PathVariable Long id, @Valid @RequestBody ItemLostDTO dto) {
+            ItemLostDTO updatedDto = service.update(dto, id);
+            return ResponseEntity.ok().body(updatedDto);
+        }
+
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
