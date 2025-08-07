@@ -15,5 +15,8 @@ public interface ItemLostRepository extends JpaRepository<ItemLost,Long> {
 
     List<ItemLost> findByStatusTrue();
 
+    // ADICIONE ESTA LINHA
+    List<ItemLost> findByStatusFalse();
+
 }
 

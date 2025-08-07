@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tfr.LostAndFoundAPP.DTO.entities.DeliveredItemDetailsDTO;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostMinDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
@@ -76,6 +77,14 @@ public class ItemLostController {
     @GetMapping(value = "/public")
     public ResponseEntity<List<ItemLostMinDTO>> findPublicItems() {
         List<ItemLostMinDTO> dto = service.findPublicItems();
+        return ResponseEntity.ok(dto);
+    }
+
+    // ADICIONE ESTE NOVO ENDPOINT
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
+    @GetMapping(value = "/delivered")
+    public ResponseEntity<List<DeliveredItemDetailsDTO>> findDeliveredItems() {
+        List<DeliveredItemDetailsDTO> dto = service.findDeliveredItems();
         return ResponseEntity.ok(dto);
     }
 

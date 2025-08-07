@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
-import tfr.LostAndFoundAPP.DTO.entities.ItemLostMinDTO;
-import tfr.LostAndFoundAPP.DTO.entities.OrderItemDTO;
-import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
+import tfr.LostAndFoundAPP.DTO.entities.*;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.entities.OrderItem;
 import tfr.LostAndFoundAPP.entities.Owner;
@@ -27,6 +24,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemLostService {
@@ -228,6 +226,12 @@ public class ItemLostService {
     public List<ItemLostMinDTO> findPublicItems() {
         List<ItemLost> result = repository.findByStatusTrue();
         return result.stream().map(x -> new ItemLostMinDTO(x)).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<DeliveredItemDetailsDTO> findDeliveredItems() {
+        List<ItemLost> result = repository.findByStatusFalse();
+        return result.stream().map(DeliveredItemDetailsDTO::new).collect(Collectors.toList());
     }
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
