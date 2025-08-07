@@ -1,6 +1,6 @@
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Maria Silva', 'maria@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT1234567', '1991-07-24', NOW());
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Alex Teixeira', 'alex@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT7654321', '1987-01-05', NOW());
-INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Ricardo Pinto', 'ricardo.pinto@mail.com', 'meupass1', 'PT1122334', '1995-11-30', NOW());
+INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Ricardo Pinto', 'ricardo@gmail.com', '$2a$10$T0yoFdiWiA1HH/Oysq/ucOPr0hdu0dvlKk.hm8TH52WNn3l86wE6C', 'PT1122334', '1995-11-30', NOW());
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('João Moreira', 'antoniocampos@live.com', 'ujLJ8aU6', 'PT1719274', '1983-06-22', NOW());
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Carlos Ramos', 'claudiocosta@hotmail.com', 'X9qvjWhT', 'PT3242077', '1993-01-24', NOW());
 INSERT INTO tb_user_app (name, email, password, por_number, birth_date, creat_At) VALUES ('Fátima Costa', 'leonorfreitas@yahoo.com', 'oKybqX2F', 'PT9199186', '1983-11-06', NOW());
@@ -43,7 +43,7 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 -- 15 VISITANTES (role_id = 1)
 
 
-INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
+
 INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (5, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (6, 1);
@@ -73,6 +73,7 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (24, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (25, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (26, 3);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (27, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 3);
 
 -- 3 ADMINISTRADORES (role_id = 4)
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 4);

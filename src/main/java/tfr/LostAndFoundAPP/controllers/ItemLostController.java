@@ -31,14 +31,14 @@ public class ItemLostController {
        return ResponseEntity.ok().body(entity);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
     @GetMapping
     public ResponseEntity<Page<ItemLostDTO>> findAllPage(Pageable  pageable){
         Page<ItemLostDTO> result = service.findAllPage(pageable);
         return  ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
     @PostMapping
     public ResponseEntity<ItemLostDTO> insertItem(@Valid @RequestBody  ItemLostDTO dto){
         dto = service.insertItem(dto);
@@ -49,8 +49,7 @@ public class ItemLostController {
 
     }
 
-
-        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
         @PutMapping(value = "/{id}/deliver")
         public ResponseEntity<ItemLostDTO> deliver(@PathVariable Long id, @Valid @RequestBody OwnerDTO dto) {
             ItemLostDTO updatedDto = service.deliver(id, dto);
@@ -58,7 +57,7 @@ public class ItemLostController {
         }
 
         // MÉTODO DE ATUALIZAÇÃO ADICIONADO AQUI
-        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
         @PutMapping(value = "/{id}")
         public ResponseEntity<ItemLostDTO> update(@PathVariable Long id, @Valid @RequestBody ItemLostDTO dto) {
             ItemLostDTO updatedDto = service.update(dto, id);
@@ -67,7 +66,7 @@ public class ItemLostController {
 
 
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'VIGILANTE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
         service.delete(id);
