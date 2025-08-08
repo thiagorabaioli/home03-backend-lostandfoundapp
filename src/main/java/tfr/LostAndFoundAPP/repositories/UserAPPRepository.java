@@ -21,7 +21,10 @@ public interface UserAPPRepository  extends JpaRepository<UserAPP,Long> {
 	""")
 	List<UserDetailsProjection> searchUserAndRolesByEmail(String email);
 
-  Optional<UserAPP> findByEmail(String email);
+	Optional<UserAPP> findByEmail(String email);
+
+	// NOVO MÉTODO ADICIONADO AQUI
+	@Query("SELECT obj FROM UserAPP obj JOIN FETCH obj.roles r WHERE r.authority IN :roleNames")
+	List<UserAPP> findUsersByRoles(List<String> roleNames);
 
 }
-

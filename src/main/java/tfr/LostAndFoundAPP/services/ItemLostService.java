@@ -17,12 +17,13 @@ import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
 import tfr.LostAndFoundAPP.repositories.OrderItemRepository;
-import tfr.LostAndFoundAPP.repositories.UserAPPRepository; // 1. Importar o repositório de utilizadores
+import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,7 +40,6 @@ public class ItemLostService {
     @Autowired
     private UserAPPService userAppService;
 
-    // 2. Injetar o EmailService e o UserAPPRepository
     @Autowired
     private EmailService emailService;
 
@@ -74,15 +74,14 @@ public class ItemLostService {
         orderItem.setNotes("Item created by user " + user.getName());
         orderItemRepository.save(orderItem);
 
-        // 3. Lógica para enviar o e-mail após o registo
+        // Lógica para enviar e-mail após o registo
         try {
-            List<UserAPP> usersToNotify = userAPPRepository.findAll();
+            List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Novo Item Perdido Registado: ID " + entity.getId();
             String body = "Um novo item perdido foi registado no sistema com a seguinte descrição: '"
                     + entity.getDescription() + "' (ID: " + entity.getId() + ").";
 
             for (UserAPP userToNotify : usersToNotify) {
-                // Pode adicionar lógica para notificar apenas certos roles, por exemplo: if (userToNotify.hasRole("ROLE_ADMIN"))
                 emailService.sendEmail(userToNotify.getEmail(), subject, body);
             }
         } catch (Exception e) {
@@ -124,9 +123,9 @@ public class ItemLostService {
 
         itemLost = repository.save(itemLost);
 
-        // 4. Lógica para enviar o e-mail após a entrega
+        // Lógica para enviar o e-mail após a entrega
         try {
-            List<UserAPP> usersToNotify = userAPPRepository.findAll();
+            List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Item Entregue: ID " + itemLost.getId();
             String body = "O item '" + itemLost.getDescription() + "' (ID: " + itemLost.getId() + ") "
                     + "foi entregue na data " + delivery.getDeliveryDate()
@@ -142,7 +141,6 @@ public class ItemLostService {
         return new ItemLostDTO(itemLost);
     }
 
-    // ... (restante código da classe permanece igual)
     @Transactional
     public ItemLostDTO update(ItemLostDTO dto, Long id){
         try{
@@ -171,14 +169,12 @@ public class ItemLostService {
     }
 
     private void copyDtoToEntity(ItemLostDTO dto, ItemLost entity){
-
         entity.setStatus(dto.isStatus());
         entity.setDescription(dto.getDescription());
         entity.setLocation(dto.getLocation());
         entity.setFoundDate(dto.getFoundDate());
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
-
     }
 
     @Transactional(readOnly = true)
@@ -194,21 +190,16 @@ public class ItemLostService {
     }
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
-
         entity.setStatus(dto.isStatus());
         entity.setDescription(dto.getDescription());
         entity.setLocation(dto.getLocation());
         entity.setFoundDate(dto.getFoundDate());
         entity.setWhoFind(dto.getWhoFind());
         entity.setImgUrl(dto.getImgUrl());
-        // Limpa a lista existente para evitar duplicatas ao atualizar
         entity.getOrderItems().clear();
 
         for (OrderItemDTO itemDto : dto.getOrderItems()) {
             OrderItem orderItem = new OrderItem();
-            // O ID do OrderItem não deve ser definido manualmente,
-            // pois geralmente é gerado automaticamente pelo banco de dados.
-            // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
             orderItem.setType(itemDto.getType());
             orderItem.setNotes(itemDto.getNotes());
             orderItem.setInteractionDate(itemDto.getInteractionDate());
