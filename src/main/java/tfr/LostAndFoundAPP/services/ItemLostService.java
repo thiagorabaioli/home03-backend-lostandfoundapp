@@ -17,6 +17,7 @@ import tfr.LostAndFoundAPP.entities.UserAPP;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
 import tfr.LostAndFoundAPP.repositories.OrderItemRepository;
+import tfr.LostAndFoundAPP.repositories.UserAPPRepository; // 1. Importar o repositório de utilizadores
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
 
@@ -38,60 +39,33 @@ public class ItemLostService {
     @Autowired
     private UserAPPService userAppService;
 
+    // 2. Injetar o EmailService e o UserAPPRepository
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private UserAPPRepository userAPPRepository;
+
     @Transactional(readOnly = true)
     public ItemLostDTO findById(Long id){
         Optional<ItemLost> entity = repository.findById(id);
-        return entity.map(x -> new ItemLostDTO(x)).orElseThrow( () -> new ResourceNotFoundException("ItemLost not found with id " + id));
-
+        return entity.map(ItemLostDTO::new).orElseThrow( () -> new ResourceNotFoundException("ItemLost not found with id " + id));
     }
 
     @Transactional(readOnly = true)
     public Page<ItemLostDTO> findAllPage(Pageable pageable){
         Page<ItemLost> entity = repository.findAll(pageable);
-        return entity.map(x -> new ItemLostDTO(x));
+        return entity.map(ItemLostDTO::new);
     }
 
     @Transactional
     public ItemLostDTO insertItem(ItemLostDTO dto){
-        // 1. Cria uma nova entidade ItemLost vazia
         ItemLost entity = new ItemLost();
-
-        // 2. Copia os dados BÁSICOS (location, description, etc.) do DTO para a entidade.
-        // O `copyDtoToEntity` agora só faz isto, ignora o `orderItems`.
         copyDtoToEntity(dto, entity);
-
-        // CORREÇÃO AQUI: Força o status para TRUE em todos os novos itens
         entity.setStatus(true);
-        // 3. Guarda o novo ItemLost na base de dados
         entity = repository.save(entity);
 
-        // --- LÓGICA DE CRIAÇÃO DO ORDERITEM ---
-        // Esta parte acontece DEPOIS de guardar e é independente do copyDtoToEntity.
-
-        // 4. Obtém o utilizador que fez a operação
         UserAPP user = userAppService.authenticate();
-
-        // 5. Cria o PRIMEIRO registo de interação (o INSERT)
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItemLost(entity);
-        orderItem.setUserAPP(user);
-        orderItem.setType(TYPEOFINTERACTION.INSERT); // Tipo INSERT
-        orderItem.setInteractionDate(Instant.now());
-        orderItem.setNotes("Item created by user " + user.getName());
-
-        // 6. Guarda este novo OrderItem
-        orderItemRepository.save(orderItem);
-        // --- FIM DA LÓGICA ---
-
-        // 7. Retorna o DTO completo, que agora já inclui o OrderItem criado
-        return new ItemLostDTO(entity);
-    }
-    public ItemLostDTO insert(ItemLostDTO dto){
-        ItemLost entity = new ItemLost();
-        copyToDto(dto, entity);
-        entity = repository.save(entity);
-        UserAPP user = userAppService.authenticate();
-
         OrderItem orderItem = new OrderItem();
         orderItem.setItemLost(entity);
         orderItem.setUserAPP(user);
@@ -100,48 +74,26 @@ public class ItemLostService {
         orderItem.setNotes("Item created by user " + user.getName());
         orderItemRepository.save(orderItem);
 
-        return new ItemLostDTO(entity);
+        // 3. Lógica para enviar o e-mail após o registo
+        try {
+            List<UserAPP> usersToNotify = userAPPRepository.findAll();
+            String subject = "Novo Item Perdido Registado: ID " + entity.getId();
+            String body = "Um novo item perdido foi registado no sistema com a seguinte descrição: '"
+                    + entity.getDescription() + "' (ID: " + entity.getId() + ").";
 
-    }
-
-    @Transactional
-    public ItemLostDTO delivery(ItemLostDTO dto, Long id){
-        try{
-            ItemLost entity = repository.getReferenceById(id);
-
-            // 1. Guarda o estado original antes de qualquer alteração
-            boolean originalStatus = entity.isStatus();
-
-            // 2. Copia os novos dados do DTO para a entidade
-            copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
-
-            // 3. Verifica se o status mudou de 'perdido' (true) para 'entregue' (false)
-            if (originalStatus && !entity.isStatus()) {
-                UserAPP user = userAppService.authenticate();
-                OrderItem orderItem = new OrderItem();
-                orderItem.setItemLost(entity);
-                orderItem.setUserAPP(user);
-                orderItem.setType(TYPEOFINTERACTION.DELIVERY);
-                orderItem.setInteractionDate(Instant.now());
-                orderItem.setNotes("Item entregue ao dono pelo utilizador " + user.getName());
-
-                // Guarda a nova interação e adiciona-a à lista na entidade
-                orderItemRepository.save(orderItem);
-                entity.getOrderItems().add(orderItem);
+            for (UserAPP userToNotify : usersToNotify) {
+                // Pode adicionar lógica para notificar apenas certos roles, por exemplo: if (userToNotify.hasRole("ROLE_ADMIN"))
+                emailService.sendEmail(userToNotify.getEmail(), subject, body);
             }
-
-            return new ItemLostDTO(entity);
-        }
-        catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException("ItemLost not found with id " + id);
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail de notificação de novo item: " + e.getMessage());
         }
 
+        return new ItemLostDTO(entity);
     }
 
     @Transactional
     public ItemLostDTO deliver(Long id, OwnerDTO ownerDto) {
-
         ItemLost itemLost = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item perdido não encontrado com o id " + id));
 
@@ -150,7 +102,6 @@ public class ItemLostService {
         }
 
         itemLost.setStatus(false);
-
         Owner delivery = new Owner();
         delivery.setName(ownerDto.getName());
         delivery.setEmail(ownerDto.getEmail());
@@ -158,7 +109,7 @@ public class ItemLostService {
         delivery.setLocation(ownerDto.getLocation());
         delivery.setDeliveryDate(LocalDate.now());
         delivery.setItemLost(itemLost);
-        delivery.setConditionAccepted(ownerDto.isConditionAccepted()); // VALOR DA CHECKBOX A SER GUARDADO
+        delivery.setConditionAccepted(ownerDto.isConditionAccepted());
         itemLost.setDelivery(delivery);
 
         UserAPP user = userAppService.authenticate();
@@ -168,14 +119,30 @@ public class ItemLostService {
         orderItem.setType(TYPEOFINTERACTION.DELIVERY);
         orderItem.setInteractionDate(Instant.now());
         orderItem.setNotes("Item entregue a " + ownerDto.getName() + " pelo utilizador " + user.getName());
-
         orderItemRepository.save(orderItem);
         itemLost.getOrderItems().add(orderItem);
+
         itemLost = repository.save(itemLost);
+
+        // 4. Lógica para enviar o e-mail após a entrega
+        try {
+            List<UserAPP> usersToNotify = userAPPRepository.findAll();
+            String subject = "Item Entregue: ID " + itemLost.getId();
+            String body = "O item '" + itemLost.getDescription() + "' (ID: " + itemLost.getId() + ") "
+                    + "foi entregue na data " + delivery.getDeliveryDate()
+                    + " ao proprietário: " + delivery.getName() + ".";
+
+            for (UserAPP userToNotify : usersToNotify) {
+                emailService.sendEmail(userToNotify.getEmail(), subject, body);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail de notificação de entrega: " + e.getMessage());
+        }
 
         return new ItemLostDTO(itemLost);
     }
 
+    // ... (restante código da classe permanece igual)
     @Transactional
     public ItemLostDTO update(ItemLostDTO dto, Long id){
         try{
@@ -217,7 +184,7 @@ public class ItemLostService {
     @Transactional(readOnly = true)
     public List<ItemLostMinDTO> findPublicItems() {
         List<ItemLost> result = repository.findByStatusTrue();
-        return result.stream().map(x -> new ItemLostMinDTO(x)).toList();
+        return result.stream().map(ItemLostMinDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -228,26 +195,25 @@ public class ItemLostService {
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
 
-            entity.setStatus(dto.isStatus());
-            entity.setDescription(dto.getDescription());
-            entity.setLocation(dto.getLocation());
-            entity.setFoundDate(dto.getFoundDate());
-            entity.setWhoFind(dto.getWhoFind());
-            entity.setImgUrl(dto.getImgUrl());
-            // Limpa a lista existente para evitar duplicatas ao atualizar
-            entity.getOrderItems().clear();
+        entity.setStatus(dto.isStatus());
+        entity.setDescription(dto.getDescription());
+        entity.setLocation(dto.getLocation());
+        entity.setFoundDate(dto.getFoundDate());
+        entity.setWhoFind(dto.getWhoFind());
+        entity.setImgUrl(dto.getImgUrl());
+        // Limpa a lista existente para evitar duplicatas ao atualizar
+        entity.getOrderItems().clear();
 
-            for (OrderItemDTO itemDto : dto.getOrderItems()) {
-                OrderItem orderItem = new OrderItem();
-                // O ID do OrderItem não deve ser definido manualmente,
-                // pois geralmente é gerado automaticamente pelo banco de dados.
-                // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
-                orderItem.setType(itemDto.getType());
-                orderItem.setNotes(itemDto.getNotes());
-                orderItem.setInteractionDate(itemDto.getInteractionDate());
-                orderItem.setItemLost(entity);
-                entity.getOrderItems().add(orderItem);
-            }
+        for (OrderItemDTO itemDto : dto.getOrderItems()) {
+            OrderItem orderItem = new OrderItem();
+            // O ID do OrderItem não deve ser definido manualmente,
+            // pois geralmente é gerado automaticamente pelo banco de dados.
+            // Se houver um usuário associado, ele precisará ser buscado e definido aqui.
+            orderItem.setType(itemDto.getType());
+            orderItem.setNotes(itemDto.getNotes());
+            orderItem.setInteractionDate(itemDto.getInteractionDate());
+            orderItem.setItemLost(entity);
+            entity.getOrderItems().add(orderItem);
         }
-
+    }
 }
