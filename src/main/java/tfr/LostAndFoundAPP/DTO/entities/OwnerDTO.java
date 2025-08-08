@@ -8,14 +8,16 @@ public class OwnerDTO {
     private String email;
     private String contact;
     private String location;
+    private boolean conditionAccepted;
 
     public OwnerDTO() {}
 
-    public OwnerDTO(String name, String email, String contact, String location) {
+    public OwnerDTO(String name, String email, String contact, String location, boolean conditionAccepted) {
         this.name = name;
         this.email = email;
         this.contact = contact;
         this.location = location;
+        this.conditionAccepted = conditionAccepted;
     }
 
     public OwnerDTO(Owner entity) {
@@ -23,6 +25,7 @@ public class OwnerDTO {
         email = entity.getEmail();
         contact = entity.getContact();
         location = entity.getLocation();
+        conditionAccepted = entity.isConditionAccepted();
 
     }
 
@@ -41,4 +44,6 @@ public class OwnerDTO {
     public String getLocation() {
         return location;
     }
+
+    public boolean isConditionAccepted() {return conditionAccepted;}
 }
