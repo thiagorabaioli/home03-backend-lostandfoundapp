@@ -18,11 +18,7 @@ O Lost and Found APP é uma aplicação web desenvolvida em Java com Spring Boot
 </div>
 
 
-<div>
-<a href="https://github.com/seu-usuário-aqui">
-<img loading="lazy" height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=thiagorabaioli&layout=compact&langs_count=7&theme=dracula"/>
 
-</div>
 
   
 ## Funcionalidades Principais
@@ -97,11 +93,11 @@ Instalação e Configuração
 Clone o repositório:
 
 ### Bash
-
+```
 git clone https://github.com/thiagorabaioli/home03-lostandfoundapp.git
 cd home03-lostandfoundapp
 Configuração da Base de Dados (Desenvolvimento):
-
+```
 ### Certifique-se de que tem o PostgreSQL em execução.
 
 Crie uma base de dados com o nome laf.
@@ -140,10 +136,10 @@ Executar a Aplicação
 Pode executar a aplicação usando o Maven Wrapper incluído:
 
 ### Bash
-
+```
 ./mvnw spring-boot:run
 A aplicação estará disponível em http://localhost:8080.
-
+```
 Estrutura da Base de Dados
 A aplicação utiliza as seguintes entidades principais:
 
@@ -236,11 +232,11 @@ Installation and Configuration
 Clone the repository:
 
 Bash
-
+```
 git clone https://github.com/thiagorabaioli/home03-lostandfoundapp.git
 cd home03-lostandfoundapp
 Database Configuration (Development):
-
+```
 Ensure you have PostgreSQL running.
 
 Create a database named laf.
@@ -279,10 +275,10 @@ Running the Application
 You can run the application using the included Maven Wrapper:
 
 Bash
-
+```
 ./mvnw spring-boot:run
 The application will be available at http://localhost:8080.
-
+```
 Database Structure
 The application uses the following main entities:
 
