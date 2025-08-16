@@ -10,22 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tfr.LostAndFoundAPP.DTO.entities.*;
-import tfr.LostAndFoundAPP.entities.ItemLost;
-import tfr.LostAndFoundAPP.entities.OrderItem;
-import tfr.LostAndFoundAPP.entities.Owner;
-import tfr.LostAndFoundAPP.entities.UserAPP;
+import tfr.LostAndFoundAPP.entities.*;
 import tfr.LostAndFoundAPP.entities.enums.TYPEOFINTERACTION;
+import tfr.LostAndFoundAPP.repositories.CollectionCenterRepository;
 import tfr.LostAndFoundAPP.repositories.ItemLostRepository;
 import tfr.LostAndFoundAPP.repositories.OrderItemRepository;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
-import tfr.LostAndFoundAPP.DTO.entities.BatchDeliveryDTO;
-import tfr.LostAndFoundAPP.entities.CollectionCenter;
-import tfr.LostAndFoundAPP.repositories.CollectionCenterRepository; // Terá de c
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +76,6 @@ public class ItemLostService {
         orderItem.setNotes("Item created by user " + user.getName());
         orderItemRepository.save(orderItem);
 
-        // Lógica para enviar e-mail após o registo
         try {
             List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Novo Item Perdido Registado: ID " + entity.getId();
@@ -129,7 +124,6 @@ public class ItemLostService {
 
         itemLost = repository.save(itemLost);
 
-        // Lógica para enviar o e-mail após a entrega
         try {
             List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Item Entregue: ID " + itemLost.getId();
@@ -145,6 +139,71 @@ public class ItemLostService {
         }
 
         return new ItemLostDTO(itemLost);
+    }
+
+    @Transactional
+    public void deliverItemsInBatch(BatchDeliveryDTO dto) {
+        UserAPP user = userAppService.authenticate();
+
+        if (!dto.isTermsAccepted()) {
+            throw new DatabaseException("Os termos de recebimento devem ser aceites.");
+        }
+
+        CollectionCenter center = new CollectionCenter();
+        center.setName(dto.getCenterName());
+        center.setDeliveryDate(dto.getDeliveryDate());
+
+        center = collectionCenterRepository.save(center);
+
+        List<ItemLost> processedItems = new ArrayList<>();
+
+        for (Long itemId : dto.getItemIds()) {
+            ItemLost item = repository.findById(itemId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Item não encontrado com ID: " + itemId));
+
+            if (!item.isStatus()) {
+                throw new DatabaseException("O item com ID " + itemId + " já foi entregue.");
+            }
+
+            item.setStatus(false);
+            item.setCollectionCenter(center);
+            item.setDelivery(center);
+            repository.save(item);
+            processedItems.add(item);
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItemLost(item);
+            orderItem.setUserAPP(user);
+            orderItem.setType(TYPEOFINTERACTION.DELIVERY);
+            orderItem.setInteractionDate(Instant.now());
+            orderItem.setNotes("Item entregue em lote ao centro '" + dto.getCenterName() + "' pelo utilizador " + user.getName());
+            orderItemRepository.save(orderItem);
+        }
+
+        // --- INÍCIO DA LÓGICA DE EMAIL ADICIONADA ---
+        try {
+            List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
+            String subject = "Entrega de Itens em Lote Realizada";
+
+            StringBuilder bodyBuilder = new StringBuilder();
+            bodyBuilder.append("Foi realizada uma entrega de ").append(processedItems.size()).append(" itens em lote:\n\n");
+            bodyBuilder.append("Centro de Recolha: ").append(dto.getCenterName()).append("\n");
+            bodyBuilder.append("Data da Entrega: ").append(dto.getDeliveryDate()).append("\n\n");
+            bodyBuilder.append("Itens Entregues:\n");
+
+            for (ItemLost item : processedItems) {
+                bodyBuilder.append("- ID ").append(item.getId()).append(": ").append(item.getDescription()).append("\n");
+            }
+
+            String body = bodyBuilder.toString();
+
+            for (UserAPP userToNotify : usersToNotify) {
+                emailService.sendEmail(userToNotify.getEmail(), subject, body);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail de notificação de entrega em lote: " + e.getMessage());
+        }
+        // --- FIM DA LÓGICA DE EMAIL ---
     }
 
     @Transactional
@@ -171,45 +230,6 @@ public class ItemLostService {
         }
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
-        }
-    }
-
-    // ... (outras importações)
-
-    @Transactional
-    public void deliverItemsInBatch(BatchDeliveryDTO dto) {
-        UserAPP user = userAppService.authenticate();
-
-        // Validação extra, embora o @AssertTrue no DTO já ajude
-        if (!dto.isTermsAccepted()) {
-            throw new DatabaseException("Os termos de recebimento devem ser aceites.");
-        }
-
-        CollectionCenter center = new CollectionCenter();
-        center.setName(dto.getCenterName());
-        center.setDeliveryDate(dto.getDeliveryDate()); // Usar a data do DTO
-
-        center = collectionCenterRepository.save(center);
-
-        for (Long itemId : dto.getItemIds()) {
-            ItemLost item = repository.findById(itemId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Item não encontrado com ID: " + itemId));
-
-            if (!item.isStatus()) {
-                throw new DatabaseException("O item com ID " + itemId + " já foi entregue.");
-            }
-
-            item.setStatus(false);
-            item.setCollectionCenter(center);
-            repository.save(item);
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItemLost(item);
-            orderItem.setUserAPP(user);
-            orderItem.setType(TYPEOFINTERACTION.DELIVERY);
-            orderItem.setInteractionDate(Instant.now());
-            orderItem.setNotes("Item entregue em lote ao centro '" + dto.getCenterName() + "' pelo utilizador " + user.getName());
-            orderItemRepository.save(orderItem);
         }
     }
 
