@@ -16,7 +16,7 @@ public class DeliveredItemDetailsDTO {
     private String imgUrl;
     private LocalDate foundDate;
 
-    // Dados da Entrega (Delivery/Owner)
+    // Dados da Entrega (pode vir de Owner ou CollectionCenter)
     private String deliveredToName;
     private String deliveredToEmail;
     private String deliveredToContact;
@@ -32,24 +32,30 @@ public class DeliveredItemDetailsDTO {
         this.foundDate = entity.getFoundDate();
 
         // --- INÍCIO DA CORREÇÃO ---
-        if (entity.getDelivery() instanceof Owner) {
+        // 1. Verifica se a entrega foi individual (para um Owner)
+        if (entity.getDelivery() != null && entity.getDelivery() instanceof Owner) {
             Owner owner = (Owner) entity.getDelivery();
             this.deliveredToName = owner.getName();
             this.deliveredToEmail = owner.getEmail();
             this.deliveredToContact = owner.getContact();
             this.deliveryDate = owner.getDeliveryDate();
         }
-        // Adicionamos a lógica para a entrega em lote
-        else if (entity.getDelivery() instanceof CollectionCenter) {
-            CollectionCenter center = (CollectionCenter) entity.getDelivery();
-            this.deliveredToName = center.getName(); // Agora vai buscar o nome do centro
-            this.deliveryDate = center.getDeliveryDate(); // E a data da entrega em lote
+        // 2. Se não foi, verifica se foi uma entrega em lote (para um CollectionCenter)
+        else if (entity.getCollectionCenter() != null) {
+            CollectionCenter center = entity.getCollectionCenter();
+            this.deliveredToName = center.getName();
+            this.deliveryDate = center.getDeliveryDate();
+            // Para entregas em lote, os campos de email e contacto ficam vazios
+            this.deliveredToEmail = null;
+            this.deliveredToContact = null;
         }
         // --- FIM DA CORREÇÃO ---
 
-        this.interactions = entity.getOrderItems().stream()
-                .map(OrderItemDTO::new)
-                .collect(Collectors.toSet());
+        if (entity.getOrderItems() != null) {
+            this.interactions = entity.getOrderItems().stream()
+                    .map(OrderItemDTO::new)
+                    .collect(Collectors.toSet());
+        }
     }
 
     // Getters
