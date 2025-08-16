@@ -1,5 +1,6 @@
 package tfr.LostAndFoundAPP.DTO.entities;
 
+import tfr.LostAndFoundAPP.entities.CollectionCenter;
 import tfr.LostAndFoundAPP.entities.ItemLost;
 import tfr.LostAndFoundAPP.entities.Owner;
 
@@ -30,6 +31,7 @@ public class DeliveredItemDetailsDTO {
         this.imgUrl = entity.getImgUrl();
         this.foundDate = entity.getFoundDate();
 
+        // --- INÍCIO DA CORREÇÃO ---
         if (entity.getDelivery() instanceof Owner) {
             Owner owner = (Owner) entity.getDelivery();
             this.deliveredToName = owner.getName();
@@ -37,6 +39,13 @@ public class DeliveredItemDetailsDTO {
             this.deliveredToContact = owner.getContact();
             this.deliveryDate = owner.getDeliveryDate();
         }
+        // Adicionamos a lógica para a entrega em lote
+        else if (entity.getDelivery() instanceof CollectionCenter) {
+            CollectionCenter center = (CollectionCenter) entity.getDelivery();
+            this.deliveredToName = center.getName(); // Agora vai buscar o nome do centro
+            this.deliveryDate = center.getDeliveryDate(); // E a data da entrega em lote
+        }
+        // --- FIM DA CORREÇÃO ---
 
         this.interactions = entity.getOrderItems().stream()
                 .map(OrderItemDTO::new)

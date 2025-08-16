@@ -57,7 +57,7 @@ public class ItemLostController {
             return ResponseEntity.ok().body(updatedDto);
         }
 
-        
+
         @PreAuthorize("hasRole('ROLE_ADMIN')")
         @PutMapping(value = "/{id}")
         public ResponseEntity<ItemLostDTO> update(@PathVariable Long id, @Valid @RequestBody ItemLostDTO dto) {

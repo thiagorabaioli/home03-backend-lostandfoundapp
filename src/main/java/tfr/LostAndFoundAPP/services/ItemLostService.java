@@ -174,19 +174,23 @@ public class ItemLostService {
         }
     }
 
+    // ... (outras importações)
+
     @Transactional
     public void deliverItemsInBatch(BatchDeliveryDTO dto) {
         UserAPP user = userAppService.authenticate();
 
-        // 1. Criar a entidade que representa a entrega em lote
+        // Validação extra, embora o @AssertTrue no DTO já ajude
+        if (!dto.isTermsAccepted()) {
+            throw new DatabaseException("Os termos de recebimento devem ser aceites.");
+        }
+
         CollectionCenter center = new CollectionCenter();
         center.setName(dto.getCenterName());
-        center.setDeliveryDate(LocalDate.now());
+        center.setDeliveryDate(dto.getDeliveryDate()); // Usar a data do DTO
 
-        // Salvar primeiro para ter um ID
         center = collectionCenterRepository.save(center);
 
-        // 2. Processar cada item
         for (Long itemId : dto.getItemIds()) {
             ItemLost item = repository.findById(itemId)
                     .orElseThrow(() -> new ResourceNotFoundException("Item não encontrado com ID: " + itemId));
@@ -195,16 +199,14 @@ public class ItemLostService {
                 throw new DatabaseException("O item com ID " + itemId + " já foi entregue.");
             }
 
-            // 3. Atualizar o status e associar ao centro de recolha
             item.setStatus(false);
             item.setCollectionCenter(center);
-            repository.save(item); // Salvar a alteração no item
+            repository.save(item);
 
-            // 4. Criar um registo de interação para cada item
             OrderItem orderItem = new OrderItem();
             orderItem.setItemLost(item);
             orderItem.setUserAPP(user);
-            orderItem.setType(TYPEOFINTERACTION.DELIVERY); // Pode criar um novo tipo se quiser
+            orderItem.setType(TYPEOFINTERACTION.DELIVERY);
             orderItem.setInteractionDate(Instant.now());
             orderItem.setNotes("Item entregue em lote ao centro '" + dto.getCenterName() + "' pelo utilizador " + user.getName());
             orderItemRepository.save(orderItem);
