@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserAPPDTO {
 
@@ -35,7 +36,8 @@ public class UserAPPDTO {
     @CollectionTable(name = "phone_number")
     private Set<String> phoneNumber = new HashSet<>();
 
-    private List<String> roles = new ArrayList<String>();
+
+    private List<RoleDTO> roles = new ArrayList<>();
 
     public UserAPPDTO(){}
 
@@ -56,9 +58,7 @@ public class UserAPPDTO {
         porNumber = entity.getPorNumber();
         birthDate = entity.getBirthDate();
         password = entity.getPassword();
-        for (GrantedAuthority role : entity.getRoles()){
-            roles.add(role.getAuthority());
-        }
+        roles = entity.getRoles().stream().map(RoleDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -89,7 +89,7 @@ public class UserAPPDTO {
         return phoneNumber;
     }
 
-    public List<String> getRoles() {
+    public List<RoleDTO> getRoles() { // MODIFICAR ESTE MÉTODO
         return roles;
     }
 }

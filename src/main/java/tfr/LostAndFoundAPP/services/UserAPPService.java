@@ -9,12 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tfr.LostAndFoundAPP.DTO.entities.RoleDTO;
 import tfr.LostAndFoundAPP.DTO.entities.UserAPPDTO;
+import tfr.LostAndFoundAPP.entities.Role;
 import tfr.LostAndFoundAPP.entities.UserAPP;
+import tfr.LostAndFoundAPP.repositories.RoleRepository;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
@@ -26,6 +30,11 @@ public class UserAPPService {
 
     @Autowired
     private UserAPPRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     public Page<UserAPPDTO> findAll(Pageable pageable) {
@@ -74,13 +83,22 @@ public class UserAPPService {
         }
     }
 
-    private void copyDtoToEntity(UserAPPDTO dto, UserAPP entity){
+    private void copyDtoToEntity(UserAPPDTO dto, UserAPP entity) {
 
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
-        entity.setPassword(dto.getPassword());
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         entity.setPorNumber(dto.getPorNumber());
         entity.setBirthDate(dto.getBirthDate());
+
+
+        entity.getRoles().clear();
+        for (RoleDTO roleDto : dto.getRoles()) {
+            Role role = roleRepository.findByAuthority(roleDto.getAuthority());
+            entity.addRole(role);
+        }
     }
 
 
