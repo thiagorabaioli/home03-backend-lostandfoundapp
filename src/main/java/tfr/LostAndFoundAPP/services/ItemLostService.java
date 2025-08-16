@@ -20,6 +20,9 @@ import tfr.LostAndFoundAPP.repositories.OrderItemRepository;
 import tfr.LostAndFoundAPP.repositories.UserAPPRepository;
 import tfr.LostAndFoundAPP.services.exceptions.DatabaseException;
 import tfr.LostAndFoundAPP.services.exceptions.ResourceNotFoundException;
+import tfr.LostAndFoundAPP.DTO.entities.BatchDeliveryDTO;
+import tfr.LostAndFoundAPP.entities.CollectionCenter;
+import tfr.LostAndFoundAPP.repositories.CollectionCenterRepository; // Terá de c
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -45,6 +48,9 @@ public class ItemLostService {
 
     @Autowired
     private UserAPPRepository userAPPRepository;
+
+    @Autowired
+    private CollectionCenterRepository collectionCenterRepository;
 
     @Transactional(readOnly = true)
     public ItemLostDTO findById(Long id){
@@ -165,6 +171,43 @@ public class ItemLostService {
         }
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
+        }
+    }
+
+    @Transactional
+    public void deliverItemsInBatch(BatchDeliveryDTO dto) {
+        UserAPP user = userAppService.authenticate();
+
+        // 1. Criar a entidade que representa a entrega em lote
+        CollectionCenter center = new CollectionCenter();
+        center.setName(dto.getCenterName());
+        center.setDeliveryDate(LocalDate.now());
+
+        // Salvar primeiro para ter um ID
+        center = collectionCenterRepository.save(center);
+
+        // 2. Processar cada item
+        for (Long itemId : dto.getItemIds()) {
+            ItemLost item = repository.findById(itemId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Item não encontrado com ID: " + itemId));
+
+            if (!item.isStatus()) {
+                throw new DatabaseException("O item com ID " + itemId + " já foi entregue.");
+            }
+
+            // 3. Atualizar o status e associar ao centro de recolha
+            item.setStatus(false);
+            item.setCollectionCenter(center);
+            repository.save(item); // Salvar a alteração no item
+
+            // 4. Criar um registo de interação para cada item
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItemLost(item);
+            orderItem.setUserAPP(user);
+            orderItem.setType(TYPEOFINTERACTION.DELIVERY); // Pode criar um novo tipo se quiser
+            orderItem.setInteractionDate(Instant.now());
+            orderItem.setNotes("Item entregue em lote ao centro '" + dto.getCenterName() + "' pelo utilizador " + user.getName());
+            orderItemRepository.save(orderItem);
         }
     }
 

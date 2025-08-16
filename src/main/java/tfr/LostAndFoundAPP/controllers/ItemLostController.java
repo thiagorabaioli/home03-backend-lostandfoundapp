@@ -15,7 +15,7 @@ import tfr.LostAndFoundAPP.DTO.entities.ItemLostDTO;
 import tfr.LostAndFoundAPP.DTO.entities.ItemLostMinDTO;
 import tfr.LostAndFoundAPP.DTO.entities.OwnerDTO;
 import tfr.LostAndFoundAPP.services.ItemLostService;
-
+import tfr.LostAndFoundAPP.DTO.entities.BatchDeliveryDTO;
 import java.net.URI;
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class ItemLostController {
             return ResponseEntity.ok().body(updatedDto);
         }
 
-        // MÉTODO DE ATUALIZAÇÃO ADICIONADO AQUI
+        
         @PreAuthorize("hasRole('ROLE_ADMIN')")
         @PutMapping(value = "/{id}")
         public ResponseEntity<ItemLostDTO> update(@PathVariable Long id, @Valid @RequestBody ItemLostDTO dto) {
@@ -80,12 +80,19 @@ public class ItemLostController {
         return ResponseEntity.ok(dto);
     }
 
-    // ADICIONE ESTE NOVO ENDPOINT
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
     @GetMapping(value = "/delivered")
     public ResponseEntity<List<DeliveredItemDetailsDTO>> findDeliveredItems() {
         List<DeliveredItemDetailsDTO> dto = service.findDeliveredItems();
         return ResponseEntity.ok(dto);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
+    @PostMapping(value = "/deliver-batch")
+    public ResponseEntity<Void> deliverBatch(@Valid @RequestBody BatchDeliveryDTO dto) {
+        service.deliverItemsInBatch(dto);
+        return ResponseEntity.noContent().build();
     }
 
 }

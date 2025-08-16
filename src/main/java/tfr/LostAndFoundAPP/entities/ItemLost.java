@@ -1,11 +1,11 @@
 package tfr.LostAndFoundAPP.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tb_item_lost")
@@ -23,6 +23,12 @@ public class ItemLost {
 
     @OneToOne(mappedBy = "itemLost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Delivery delivery;
+
+    // NOVO CAMPO PARA A RELAÇÃO COM A ENTREGA EM LOTE
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "collection_center_id")
+    private CollectionCenter collectionCenter;
 
     @OneToMany(mappedBy = "itemLost")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
@@ -112,6 +118,15 @@ public class ItemLost {
 
     public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    // Adicionar Getter e Setter para o novo campo
+    public CollectionCenter getCollectionCenter() {
+        return collectionCenter;
+    }
+
+    public void setCollectionCenter(CollectionCenter collectionCenter) {
+        this.collectionCenter = collectionCenter;
     }
 
     @Override
