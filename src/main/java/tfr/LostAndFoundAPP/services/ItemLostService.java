@@ -124,16 +124,32 @@ public class ItemLostService {
 
         itemLost = repository.save(itemLost);
 
+        // Bloco de envio de emails
         try {
+            // 1. Envio para admins e vigilantes (como já existia)
             List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
-            String subject = "Item Entregue: ID " + itemLost.getId();
-            String body = "O item '" + itemLost.getDescription() + "' (ID: " + itemLost.getId() + ") "
+            String subjectAdmin = "Item Entregue: ID " + itemLost.getId();
+            String bodyAdmin = "O item '" + itemLost.getDescription() + "' (ID: " + itemLost.getId() + ") "
                     + "foi entregue na data " + delivery.getDeliveryDate()
                     + " ao proprietário: " + delivery.getName() + ".";
 
             for (UserAPP userToNotify : usersToNotify) {
-                emailService.sendEmail(userToNotify.getEmail(), subject, body);
+                emailService.sendEmail(userToNotify.getEmail(), subjectAdmin, bodyAdmin);
             }
+
+            // --- INÍCIO DA NOVA LÓGICA ---
+            // 2. Envio para o proprietário, se o email foi fornecido
+            if (ownerDto.getEmail() != null && !ownerDto.getEmail().isBlank()) {
+                String subjectOwner = "Confirmação de Entrega do seu Item";
+                String bodyOwner = "Olá, " + ownerDto.getName() + ".\n\n"
+                        + "Este email confirma a receção do seu item: '" + itemLost.getDescription() + "'.\n\n"
+                        + "A entrega foi registada em " + delivery.getDeliveryDate() + ".\n\n"
+                        + "Com os melhores cumprimentos,\nA Equipa Lost and Found";
+
+                emailService.sendEmail(ownerDto.getEmail(), subjectOwner, bodyOwner);
+            }
+            // --- FIM DA NOVA LÓGICA ---
+
         } catch (Exception e) {
             System.err.println("Erro ao enviar e-mail de notificação de entrega: " + e.getMessage());
         }
@@ -180,7 +196,6 @@ public class ItemLostService {
             orderItemRepository.save(orderItem);
         }
 
-        // --- INÍCIO DA LÓGICA DE EMAIL ADICIONADA ---
         try {
             List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Entrega de Itens em Lote Realizada";
@@ -203,7 +218,6 @@ public class ItemLostService {
         } catch (Exception e) {
             System.err.println("Erro ao enviar e-mail de notificação de entrega em lote: " + e.getMessage());
         }
-        // --- FIM DA LÓGICA DE EMAIL ---
     }
 
     @Transactional
