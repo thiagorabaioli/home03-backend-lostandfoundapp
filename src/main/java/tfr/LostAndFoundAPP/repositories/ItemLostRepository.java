@@ -1,5 +1,7 @@
 package tfr.LostAndFoundAPP.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,8 @@ import java.util.Optional;
 @Repository
 public interface ItemLostRepository extends JpaRepository<ItemLost,Long> {
 
-    List<ItemLost> findByStatusTrue();
+    // MÉTODO MODIFICADO PARA ACEITAR PAGINAÇÃO
+    Page<ItemLost> findByStatusTrue(Pageable pageable);
 
     // ADICIONE ESTA LINHA
     List<ItemLost> findByStatusFalse();

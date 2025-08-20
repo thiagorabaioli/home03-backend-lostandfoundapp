@@ -5,7 +5,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -258,8 +260,9 @@ public class ItemLostService {
 
     @Transactional(readOnly = true)
     public List<ItemLostMinDTO> findPublicItems() {
-        List<ItemLost> result = repository.findByStatusTrue();
-        return result.stream().map(ItemLostMinDTO::new).toList();
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "id"));
+        List<ItemLost> result = repository.findByStatusTrue(pageable).getContent();
+        return result.stream().map(ItemLostMinDTO::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
