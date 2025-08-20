@@ -57,8 +57,8 @@ public class ItemLostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ItemLostDTO> findAllPage(Pageable pageable){
-        Page<ItemLost> entity = repository.findAll(pageable);
+    public Page<ItemLostDTO> findAllPage(String description, Pageable pageable){
+        Page<ItemLost> entity = repository.searchByDescription(description, pageable);
         return entity.map(ItemLostDTO::new);
     }
 

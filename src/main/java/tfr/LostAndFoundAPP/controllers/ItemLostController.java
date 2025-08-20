@@ -34,9 +34,11 @@ public class ItemLostController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")
     @GetMapping
-    public ResponseEntity<Page<ItemLostDTO>> findAllPage(Pageable  pageable){
-        Page<ItemLostDTO> result = service.findAllPage(pageable);
-        return  ResponseEntity.ok().body(result);
+    public ResponseEntity<Page<ItemLostDTO>> findAllPage(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            Pageable pageable) {
+        Page<ItemLostDTO> result = service.findAllPage(name, pageable);
+        return ResponseEntity.ok().body(result);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_VIGILANTE')")

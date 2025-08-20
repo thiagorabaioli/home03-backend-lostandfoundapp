@@ -15,11 +15,14 @@ import java.util.Optional;
 @Repository
 public interface ItemLostRepository extends JpaRepository<ItemLost,Long> {
 
-    // MÉTODO MODIFICADO PARA ACEITAR PAGINAÇÃO
+
     Page<ItemLost> findByStatusTrue(Pageable pageable);
 
-    // ADICIONE ESTA LINHA
+
     List<ItemLost> findByStatusFalse();
 
+    // SEARCH BAR method
+    @Query("SELECT obj FROM ItemLost obj WHERE LOWER(obj.description) LIKE LOWER(CONCAT('%', :description, '%'))")
+    Page<ItemLost> searchByDescription(String description, Pageable pageable);
 }
 
