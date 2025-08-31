@@ -1,7 +1,6 @@
 package tfr.LostAndFoundAPP.entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +9,9 @@ import java.util.Set;
 public class CollectionCenter extends Delivery {
 
     private String name;
-    private String location; // Opcional: pode adicionar uma morada
+    private String location;
 
-    // Relação de Um (Centro de Recolha) para Muitos (Itens)
+
     @OneToMany(mappedBy = "collectionCenter")
     private Set<ItemLost> items = new HashSet<>();
 
