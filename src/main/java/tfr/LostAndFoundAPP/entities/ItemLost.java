@@ -24,7 +24,7 @@ public class ItemLost {
     @OneToOne(mappedBy = "itemLost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Delivery delivery;
 
-    // NOVO CAMPO PARA A RELAÇÃO COM A ENTREGA EM LOTE
+    
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "collection_center_id")

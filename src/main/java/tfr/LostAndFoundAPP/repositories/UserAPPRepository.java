@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface UserAPPRepository  extends JpaRepository<UserAPP,Long> {
 
+
+
 	@Query(nativeQuery = true, value = """
 		SELECT tb_user_app.email AS username, tb_user_app.password, tb_role.id AS roleId, tb_role.authority
 		FROM tb_user_app
