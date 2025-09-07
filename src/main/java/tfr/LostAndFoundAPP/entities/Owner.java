@@ -16,15 +16,17 @@ public class Owner extends Delivery {
     private String contact;
     private String location;
     private boolean conditionAccepted;
+    private boolean sameCondition;
 
     public Owner(){}
 
-    public Owner(Long id, LocalDate deliveryDate, String name, String location, String contact, String email, boolean conditionAccepted) {
+    public Owner(Long id, LocalDate deliveryDate, String name, String location, String contact, String email, boolean conditionAccepted, boolean sameCondition) {
         super(id, deliveryDate);
         this.name = name;
         this.location = location;
         this.contact = contact;
         this.email = email;
+        this.sameCondition = sameCondition;
         this.conditionAccepted = conditionAccepted;
     }
 
@@ -62,6 +64,14 @@ public class Owner extends Delivery {
 
     public boolean isConditionAccepted() {
         return conditionAccepted;
+    }
+
+    public boolean isSameCondition() {
+        return sameCondition;
+    }
+
+    public void setSameCondition(boolean sameCondition) {
+        this.sameCondition = sameCondition;
     }
 
     public void setConditionAccepted(boolean conditionAccepted) {
