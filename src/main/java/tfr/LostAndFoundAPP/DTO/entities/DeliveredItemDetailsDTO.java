@@ -10,19 +10,22 @@ import java.util.stream.Collectors;
 
 public class DeliveredItemDetailsDTO {
 
-    // Dados do ItemLost
+
     private Long itemId;
     private String description;
     private String imgUrl;
     private LocalDate foundDate;
 
-    // Dados da Entrega (pode vir de Owner ou CollectionCenter)
+
     private String deliveredToName;
     private String deliveredToEmail;
     private String deliveredToContact;
+    private String deliveredToLocation;
     private LocalDate deliveryDate;
+    private boolean conditionAccepted;
+    private boolean sameCondition;
 
-    // Histórico de Interações (OrderItem)
+
     private Set<OrderItemDTO> interactions;
 
     public DeliveredItemDetailsDTO(ItemLost entity) {
@@ -31,25 +34,22 @@ public class DeliveredItemDetailsDTO {
         this.imgUrl = entity.getImgUrl();
         this.foundDate = entity.getFoundDate();
 
-        // --- INÍCIO DA CORREÇÃO ---
-        // 1. Verifica se a entrega foi individual (para um Owner)
         if (entity.getDelivery() != null && entity.getDelivery() instanceof Owner) {
             Owner owner = (Owner) entity.getDelivery();
             this.deliveredToName = owner.getName();
             this.deliveredToEmail = owner.getEmail();
             this.deliveredToContact = owner.getContact();
             this.deliveryDate = owner.getDeliveryDate();
-        }
-        // 2. Se não foi, verifica se foi uma entrega em lote (para um CollectionCenter)
-        else if (entity.getCollectionCenter() != null) {
+
+            this.deliveredToLocation = owner.getLocation();
+            this.conditionAccepted = owner.isConditionAccepted();
+            this.sameCondition = owner.isSameCondition();
+
+        } else if (entity.getCollectionCenter() != null) {
             CollectionCenter center = entity.getCollectionCenter();
             this.deliveredToName = center.getName();
             this.deliveryDate = center.getDeliveryDate();
-            // Para entregas em lote, os campos de email e contacto ficam vazios
-            this.deliveredToEmail = null;
-            this.deliveredToContact = null;
         }
-        // --- FIM DA CORREÇÃO ---
 
         if (entity.getOrderItems() != null) {
             this.interactions = entity.getOrderItems().stream()
@@ -58,7 +58,7 @@ public class DeliveredItemDetailsDTO {
         }
     }
 
-    // Getters
+    // --- GETTERS PARA OS NOVOS CAMPOS ---
     public Long getItemId() { return itemId; }
     public String getDescription() { return description; }
     public String getImgUrl() { return imgUrl; }
@@ -67,5 +67,8 @@ public class DeliveredItemDetailsDTO {
     public String getDeliveredToEmail() { return deliveredToEmail; }
     public String getDeliveredToContact() { return deliveredToContact; }
     public LocalDate getDeliveryDate() { return deliveryDate; }
+    public String getDeliveredToLocation() { return deliveredToLocation; }
+    public boolean isConditionAccepted() { return conditionAccepted; }
+    public boolean isSameCondition() { return sameCondition; }
     public Set<OrderItemDTO> getInteractions() { return interactions; }
 }
