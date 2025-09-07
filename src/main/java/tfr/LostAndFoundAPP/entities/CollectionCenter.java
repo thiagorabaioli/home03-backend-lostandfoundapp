@@ -10,6 +10,8 @@ public class CollectionCenter extends Delivery {
 
     private String name;
     private String location;
+    private String receiverName;
+    private String receiverEmail;
 
 
     @OneToMany(mappedBy = "collectionCenter")
@@ -17,7 +19,28 @@ public class CollectionCenter extends Delivery {
 
     public CollectionCenter() {}
 
-    // Getters e Setters
+
+
+    public void setItems(Set<ItemLost> items) {
+        this.items = items;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getReceiverEmail() {
+        return receiverEmail;
+    }
+
+    public void setReceiverEmail(String receiverEmail) {
+        this.receiverEmail = receiverEmail;
+    }
+
     public String getName() {
         return name;
     }

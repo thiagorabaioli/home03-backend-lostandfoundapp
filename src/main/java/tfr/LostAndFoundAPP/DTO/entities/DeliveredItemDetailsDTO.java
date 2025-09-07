@@ -48,6 +48,8 @@ public class DeliveredItemDetailsDTO {
         } else if (entity.getCollectionCenter() != null) {
             CollectionCenter center = entity.getCollectionCenter();
             this.deliveredToName = center.getName();
+            this.deliveredToName = center.getReceiverName();
+            this.deliveredToEmail = center.getReceiverEmail();
             this.deliveryDate = center.getDeliveryDate();
         }
 
@@ -58,7 +60,7 @@ public class DeliveredItemDetailsDTO {
         }
     }
 
-    // --- GETTERS PARA OS NOVOS CAMPOS ---
+   
     public Long getItemId() { return itemId; }
     public String getDescription() { return description; }
     public String getImgUrl() { return imgUrl; }
