@@ -8,12 +8,12 @@ public class OwnerDTO {
     private String email;
     private String contact;
     private String location;
-    private boolean sameCondition;
+    private Boolean sameCondition;
     private boolean conditionAccepted;
 
     public OwnerDTO() {}
 
-    public OwnerDTO(String name, String email, String contact, String location, boolean conditionAccepted,  boolean sameCondition) {
+    public OwnerDTO(String name, String email, String contact, String location, boolean conditionAccepted,  Boolean sameCondition) {
         this.name = name;
         this.email = email;
         this.contact = contact;
@@ -48,7 +48,7 @@ public class OwnerDTO {
         return location;
     }
 
-    public boolean isSameCondition() {
+    public Boolean isSameCondition() {
         return sameCondition;
     }
 
