@@ -170,6 +170,8 @@ public class ItemLostService {
         CollectionCenter center = new CollectionCenter();
         center.setName(dto.getCenterName());
         center.setDeliveryDate(dto.getDeliveryDate());
+        center.setReceiverName(dto.getReceiverName());
+        center.setReceiverEmail(dto.getReceiverEmail());
 
         center = collectionCenterRepository.save(center);
 
