@@ -60,7 +60,7 @@ public class DeliveredItemDetailsDTO {
         }
     }
 
-   
+
     public Long getItemId() { return itemId; }
     public String getDescription() { return description; }
     public String getImgUrl() { return imgUrl; }

@@ -173,6 +173,7 @@ public class ItemLostService {
         center.setReceiverName(dto.getReceiverName());
         center.setReceiverEmail(dto.getReceiverEmail());
 
+
         center = collectionCenterRepository.save(center);
 
         List<ItemLost> processedItems = new ArrayList<>();
@@ -200,26 +201,45 @@ public class ItemLostService {
             orderItemRepository.save(orderItem);
         }
 
+
         try {
+
             List<UserAPP> usersToNotify = userAPPRepository.findUsersByRoles(Arrays.asList("ROLE_ADMIN", "ROLE_VIGILANTE"));
             String subject = "Entrega de Itens em Lote Realizada";
 
             StringBuilder bodyBuilder = new StringBuilder();
             bodyBuilder.append("Foi realizada uma entrega de ").append(processedItems.size()).append(" itens em lote:\n\n");
             bodyBuilder.append("Centro de Recolha: ").append(dto.getCenterName()).append("\n");
+            bodyBuilder.append("Recebido por: ").append(dto.getReceiverName()).append("\n");
             bodyBuilder.append("Data da Entrega: ").append(dto.getDeliveryDate()).append("\n\n");
             bodyBuilder.append("Itens Entregues:\n");
 
             for (ItemLost item : processedItems) {
                 bodyBuilder.append("- ID ").append(item.getId()).append(": ").append(item.getDescription()).append("\n");
             }
-
-            String body = bodyBuilder.toString();
+            String bodyAdmin = bodyBuilder.toString();
 
             for (UserAPP userToNotify : usersToNotify) {
-                emailService.sendEmail(userToNotify.getEmail(), subject, body);
+                emailService.sendEmail(userToNotify.getEmail(), subject, bodyAdmin);
             }
+
+            // --- INÍCIO DA NOVA LÓGICA DE EMAIL PARA O RECETOR ---
+            // 2. Verifica se um email foi fornecido para o recetor e envia a notificação
+            if (dto.getReceiverEmail() != null && !dto.getReceiverEmail().isBlank()) {
+                String subjectReceiver = "Confirmação de Recebimento de Itens";
+
+                // Reutiliza o corpo do email, mas adiciona uma saudação
+                String bodyReceiver = "Olá, " + dto.getReceiverName() + ".\n\n"
+                        + "Este email confirma o recebimento dos seguintes itens na nossa plataforma:\n\n"
+                        + bodyAdmin // Aproveita a lista de itens já formatada
+                        + "\nCom os melhores cumprimentos,\nA Equipa Lost and Found";
+
+                emailService.sendEmail(dto.getReceiverEmail(), subjectReceiver, bodyReceiver);
+            }
+
+
         } catch (Exception e) {
+
             System.err.println("Erro ao enviar e-mail de notificação de entrega em lote: " + e.getMessage());
         }
     }
