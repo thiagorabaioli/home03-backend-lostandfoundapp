@@ -52,6 +52,7 @@ public class DeliveredItemDetailsDTO {
             this.deliveredToName = center.getReceiverName();
             this.deliveredToEmail = center.getReceiverEmail();
             this.deliveryDate = center.getDeliveryDate();
+            this.conditionAccepted = center.isConditionAccepted();
         }
 
         if (entity.getOrderItems() != null) {

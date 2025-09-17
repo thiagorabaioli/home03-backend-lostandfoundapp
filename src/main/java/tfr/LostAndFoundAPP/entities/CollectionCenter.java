@@ -12,7 +12,7 @@ public class CollectionCenter extends Delivery {
     private String location;
     private String receiverName;
     private String receiverEmail;
-
+    private Boolean conditionAccepted;
 
     @OneToMany(mappedBy = "collectionCenter")
     private Set<ItemLost> items = new HashSet<>();
@@ -59,5 +59,13 @@ public class CollectionCenter extends Delivery {
 
     public Set<ItemLost> getItems() {
         return items;
+    }
+
+    public Boolean isConditionAccepted() {
+        return conditionAccepted;
+    }
+
+    public void setConditionAccepted(Boolean conditionAccepted) {
+        this.conditionAccepted = conditionAccepted;
     }
 }
