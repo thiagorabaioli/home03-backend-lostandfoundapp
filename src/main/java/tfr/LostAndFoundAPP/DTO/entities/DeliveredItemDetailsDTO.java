@@ -23,7 +23,7 @@ public class DeliveredItemDetailsDTO {
     private String deliveredToLocation;
     private LocalDate deliveryDate;
     private boolean conditionAccepted;
-    private boolean sameCondition;
+    private Boolean sameCondition;
 
 
     private Set<OrderItemDTO> interactions;
@@ -43,6 +43,7 @@ public class DeliveredItemDetailsDTO {
 
             this.deliveredToLocation = owner.getLocation();
             this.conditionAccepted = owner.isConditionAccepted();
+
             this.sameCondition = owner.isSameCondition();
 
         } else if (entity.getCollectionCenter() != null) {
@@ -71,6 +72,6 @@ public class DeliveredItemDetailsDTO {
     public LocalDate getDeliveryDate() { return deliveryDate; }
     public String getDeliveredToLocation() { return deliveredToLocation; }
     public boolean isConditionAccepted() { return conditionAccepted; }
-    public boolean isSameCondition() { return sameCondition; }
+    public Boolean isSameCondition() { return sameCondition; }
     public Set<OrderItemDTO> getInteractions() { return interactions; }
 }
