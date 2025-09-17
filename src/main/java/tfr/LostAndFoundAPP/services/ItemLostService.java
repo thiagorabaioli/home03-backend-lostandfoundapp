@@ -112,6 +112,8 @@ public class ItemLostService {
         delivery.setDeliveryDate(LocalDate.now());
         delivery.setItemLost(itemLost);
         delivery.setConditionAccepted(ownerDto.isConditionAccepted());
+        delivery.setSameCondition(ownerDto.isSameCondition());
+
         itemLost.setDelivery(delivery);
 
         UserAPP user = userAppService.authenticate();
@@ -172,6 +174,7 @@ public class ItemLostService {
         center.setDeliveryDate(dto.getDeliveryDate());
         center.setReceiverName(dto.getReceiverName());
         center.setReceiverEmail(dto.getReceiverEmail());
+        center.setConditionAccepted(dto.isTermsAccepted());
 
 
         center = collectionCenterRepository.save(center);
