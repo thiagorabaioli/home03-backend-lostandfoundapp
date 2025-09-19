@@ -297,7 +297,6 @@ public class ItemLostService {
     }
 
     private void copyToDto(ItemLostDTO dto, ItemLost entity){
-        entity.setStatus(dto.isStatus());
         entity.setDescription(dto.getDescription());
         entity.setLocation(dto.getLocation());
         entity.setFoundDate(dto.getFoundDate());
