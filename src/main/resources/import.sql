@@ -132,7 +132,7 @@ INSERT INTO tb_item_lost (status, location, who_find, description, found_date, i
 INSERT INTO tb_item_lost (status, location, who_find, description, found_date, img_url) VALUES (true, 'Estacionamento', 'Visitante Andreia Leal', 'Chaves com porta-chaves azul', '2025-03-16', 'https://raw.githubusercontent.com/thiagorabaioli/assets/refs/heads/main/objetos%20perdidos/portachavesazul.webp');
 
 
-INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 1, 1, 'Nota do pedido 1');
+INSERT INTO order_item (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 1, 1, 'Nota do pedido 1');
 INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 2, 2, 'Nota do pedido 2');
 INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 3, 3, 'Nota do pedido 3');
 INSERT INTO ORDER_ITEM (type, interaction_date, item_lost_id, userapp_id, notes) VALUES (1, '2025-07-01', 4, 4, 'Nota do pedido 4');
