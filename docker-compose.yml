@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # --- CLOUDFLARE TUNNEL ---
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: laf-tunnel
+    restart: always
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - laf-net
+
+  # --- FRONTEND (SITE) ---
+  frontend:
+    build:
+      # Certifique-se que a pasta do frontend está ao lado da pasta do backend
+      context: ../laf-frontend/frontend-lostandofund
+      args:
+        - VITE_BACKEND_URL=https://api.sias.world
+    container_name: laf-frontend
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - laf-net
+
+  # --- BACKEND (API) ---
+  backend:
+    build: .
+    container_name: laf-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/laf
+      - SPRING_DATASOURCE_USERNAME=${DB_USER:-pidb}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-123456}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - CORS_ORIGINS=*
+      # --- CONFIGURAÇÃO DO GOOGLE LOGIN ---
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_SCOPE=openid,profile,email
+    networks:
+      - laf-net
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # --- BASE DE DADOS ---
+  db:
+    image: postgres:15
+    container_name: laf-db
+    restart: always
+    environment:
+      - POSTGRES_DB=laf
+      - POSTGRES_USER=${DB_USER:-pidb}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-123456}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - laf-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pidb -d laf"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_data:
+
+networks:
+  laf-net:
+    driver: bridge
